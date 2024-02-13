@@ -11,7 +11,10 @@ const Nav = () => {
       <nav>
         <ul className='flex space-x-4'>
           <li>
-            <NavLink to='/' className='text-white hover:text-gray-200'>
+            <NavLink
+              to='/explore-destinations'
+              className='text-white hover:text-gray-200'
+            >
               Explore Destinations
             </NavLink>
           </li>

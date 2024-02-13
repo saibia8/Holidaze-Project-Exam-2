@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Layout from './components/Layout';
+import ExploreDestinations from './pages/ExploreDestinations';
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
+          <Route
+            path='/explore-destinations'
+            element={<ExploreDestinations />}
+          />
           <Route path='/register' element={<Register />} />
           <Route path='/contact-us' element={<ContactUs />} />
           <Route path='/login' element={<Login />} />

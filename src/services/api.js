@@ -17,3 +17,12 @@ export const registerUser = async (data) => {
     throw error;
   }
 };
+
+export const getVenues = async () => {
+  try {
+    const response = await fetch(VENUES_URL);
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
