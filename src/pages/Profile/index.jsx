@@ -1,9 +1,9 @@
-const Login = () => {
+const Profile = () => {
   return (
     <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-28'>
-      <h1>Login</h1>
+      <p>Profile page content</p>
     </div>
   );
 };
 
-export default Login;
+export default Profile;

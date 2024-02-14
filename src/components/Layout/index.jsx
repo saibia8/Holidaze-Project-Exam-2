@@ -4,11 +4,11 @@ import Header from '../Header';
 
 const Layout = () => {
   return (
-    <div className='flex flex-col min-h-screen justify-between'>
+    <>
       <Header />
-      <Outlet className='flex-grow' />
+      <Outlet />
       <Footer />
-    </div>
+    </>
   );
 };
 

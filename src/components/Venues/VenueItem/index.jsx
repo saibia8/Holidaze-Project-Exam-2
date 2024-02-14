@@ -1,6 +1,6 @@
 const VenueItem = ({ venue }) => {
   return (
-    <div className='card card-compact w-96 bg-base-100 shadow-xl'>
+    <div>
       <figure>
         <img src={venue.media[0]} alt='Travel' />
       </figure>

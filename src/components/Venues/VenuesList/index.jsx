@@ -17,7 +17,7 @@ const VenuesList = () => {
   if (isError) return `Error: ${error.message}`;
 
   return (
-    <div className=''>
+    <div>
       <h2>Venues</h2>
       {venues?.map((venue) => (
         <VenueItem key={venue.id} venue={venue} />
