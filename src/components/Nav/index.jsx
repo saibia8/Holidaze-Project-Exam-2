@@ -60,9 +60,7 @@ const Nav = () => {
               </button>
             </Link>
             <Link to='login'>
-              <button className='bg-green py-2 px-4 transition-all duration-300 rounded text-secondary hover:bg-secondary hover:text-primary hover:outline hover:outline-green'>
-                Login
-              </button>
+              <button className='btnPrimary'>Login</button>
             </Link>
           </div>
 
@@ -88,23 +86,30 @@ const Nav = () => {
         }`}
       >
         {navItems.map(({ path, link }) => (
-          <NavLink key={link} to={path} className='block hover:text-gray-300'>
+          <NavLink
+            key={link}
+            to={path}
+            className='block hover:text-gray-300'
+            onClick={toggleMenu}
+          >
             {link}
           </NavLink>
         ))}
-        <Link to='profile' className='block pt-5 hover:text-green'>
+        <Link
+          to='profile'
+          className='block pt-5 hover:text-green'
+          onClick={toggleMenu}
+        >
           <CgProfile className='mr-2' />
           <span>Profile</span>
         </Link>
-        <Link to='register' className='block'>
+        <Link to='register' className='block' onClick={toggleMenu}>
           <button className='bg-secondary py-2 px-4 transition-all duration-300 rounded outline outline-2 outline-green hover:text-secondary hover:bg-green'>
             Sign Up
           </button>
         </Link>
-        <Link to='login' className='block'>
-          <button className='bg-green py-2 px-4 transition-all duration-300 rounded text-secondary hover:bg-secondary hover:text-primary hover:outline hover:outline-green'>
-            Login
-          </button>
+        <Link to='login' className='block' onClick={toggleMenu}>
+          <button className='btnPrimary'>Login</button>
         </Link>
       </div>
     </>

@@ -10,3 +10,11 @@ body {
 nav {
   z-index: 10001 !important;
 }
+
+.btnPrimary {
+  @apply bg-green py-2 px-4 transition-all duration-300 rounded text-secondary hover:bg-secondary hover:text-primary hover:outline hover:outline-green;
+}
+
+.btnSecondary {
+  @apply bg-orange py-2 px-4 transition-all duration-300 rounded text-primary hover:bg-secondary hover:text-primary hover:outline hover:outline-orange;
+}

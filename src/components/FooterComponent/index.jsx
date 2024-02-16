@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const FooterComponent = () => {
   return (
-    <div className='bg-[#010851] md:px-14 p-4 max-w-screen-2xl mx-auto text-white'>
+    <div className='bg-secondary md:px-14 p-4 max-w-screen-2xl mx-auto text-primary border-t'>
       <div className='my-12 flex flex-col md:flex-row gap-10'>
         <div className='md:w-1/2 space-y-8'>
           <a
@@ -18,8 +18,8 @@ const FooterComponent = () => {
             <span className='text-white'>XYZ</span>
           </a>
           <p className='md:w-1/2'>
-            A simple paragraph is comprised of three major components. The first
-            sentence, which is often a declarative sentence.
+            Subscribe to our newsletter and never miss our new articles, product
+            updates, and special deals.
           </p>
           <div>
             <input
@@ -27,12 +27,12 @@ const FooterComponent = () => {
               name='email'
               id='email'
               placeholder='Your email'
-              className='bg-[#9A7AF159] py-2 px-4 rounded-md focus:outline-none'
+              className='bg-yellow py-2 px-4 rounded-md focus:outline-none'
             />
             <input
               type='submit'
               value='Subscribe'
-              className='px-4 py-2 bg-secondary rounded-md -ml-2 cursor-pointer hover:bg-white hover:text-primary duration-300 transition-all'
+              className='btnSecondary bg-orange -ml-2'
             />
           </div>
         </div>
@@ -40,19 +40,19 @@ const FooterComponent = () => {
         {/* footer navigation */}
         <div className='md:w-1/2 flex flex-col md:flex-row flex-wrap justify-between gap-8 items-start'>
           <div className='space-y-4 mt-5'>
-            <h4 className='text-xl'>Platform</h4>
+            <h4 className='text-xl'>Navigate</h4>
             <ul className='space-y-3'>
               <Link
-                to='home'
+                to='explore-destinations'
                 className='block hover:text-gray-300 cursor-pointer'
               >
-                Overview
+                Explore Destinations
               </Link>
               <Link
-                to='feature'
+                to='contact-us'
                 className='block hover:text-gray-300 cursor-pointer'
               >
-                Features
+                Contact Us
               </Link>
               <Link
                 to='about'
@@ -60,40 +60,36 @@ const FooterComponent = () => {
               >
                 About
               </Link>
-              <Link
-                to='pricing'
-                className='block hover:text-gray-300 cursor-pointer'
-              >
-                Pricing
-              </Link>
             </ul>
           </div>
           <div className='space-y-4 mt-5'>
             <h4 className='text-xl'>Help</h4>
             <ul className='space-y-3'>
-              <a href='/' className='block hover:text-gray-300'>
+              <Link href='/' className='block hover:text-gray-300'>
                 How does it works?
-              </a>
-              <a href='/' className='block hover:text-gray-300'>
+              </Link>
+              <Link href='/' className='block hover:text-gray-300'>
                 Where to ask question?
-              </a>
-              <a href='/' className='block hover:text-gray-300'>
-                How to play?
-              </a>
-              <a href='/' className='block hover:text-gray-300'>
+              </Link>
+              <Link href='/' className='block hover:text-gray-300'>
+                How to pay?
+              </Link>
+              <Link href='/' className='block hover:text-gray-300'>
                 What is needed for this?
-              </a>
+              </Link>
             </ul>
           </div>
           <div className='space-y-4 mt-5'>
             <h4 className='text-xl'>Contacts</h4>
             <ul className='space-y-3'>
-              <p className='hover:text-gray-300'>(012) 1234-567-890</p>
-              <p className='hover:text-gray-300'>123 xyz xyz</p>
-              <p className='hover:text-gray-300'>
-                qwuerybaihefv, qiwu - hrebcl
+              <p className='font-semibold'>123 Maple Street</p>
+              <p>Springfield, Anytown 12345</p>
+              <p>
+                <span className='font-semibold'>Phone: </span>+1 (555) 123-4567
               </p>
-              <p className='hover:text-gray-300'>095467</p>
+              <p>
+                <span className='font-semibold'>Email: </span>hello@holidaze.com
+              </p>
             </ul>
           </div>
         </div>
@@ -102,7 +98,7 @@ const FooterComponent = () => {
       <hr />
 
       <div className='flex flex-col sm:flex-row gap-8 sm:items-center justify-between my-8'>
-        <p className='py-5'>&copy; 2024 All rights reserved. XYZ</p>
+        <p className='py-5'>&copy; 2024 All rights reserved. Holidaze</p>
         <div className='flex items-center space-x-5'>
           <img
             src={facebook}
