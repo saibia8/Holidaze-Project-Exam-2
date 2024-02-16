@@ -1,7 +1,9 @@
+import FooterComponent from '../FooterComponent';
+
 const Footer = () => {
   return (
-    <footer className='bg-blue-500'>
-      <p>Footer</p>
+    <footer>
+      <FooterComponent />
     </footer>
   );
 };

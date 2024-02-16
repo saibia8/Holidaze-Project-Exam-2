@@ -19,7 +19,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className='bg-secondary md:px-14 p-4 max-w-screen-2xl mx-auto text-primary fixed top-0 right-0 left-0'>
+      <nav className='bg-secondary md:px-14 p-4 max-w-screen-2xl border-b mx-auto text-primary fixed top-0 right-0 left-0'>
         <div className='bg-secondary text-lg container mx-auto flex justify-between items-center font-medium'>
           <div className='flex space-x-14 items-center'>
             {/* logo */}
