@@ -11,6 +11,12 @@ nav {
   z-index: 10001 !important;
 }
 
+.fontPrimary {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .btnPrimary {
   @apply bg-green py-2 px-4 transition-all duration-300 rounded text-secondary hover:bg-secondary hover:text-primary hover:outline hover:outline-green;
 }
