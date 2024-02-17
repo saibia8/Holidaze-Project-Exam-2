@@ -18,6 +18,21 @@ export const registerUser = async (data) => {
   }
 };
 
+export const loginUser = async (data) => {
+  try {
+    const response = await fetch(LOGIN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getVenues = async () => {
   try {
     const response = await fetch(VENUES_URL);

@@ -140,7 +140,7 @@ const RegisterForm = () => {
         </div>
 
         <button type='submit' className='btnSecondary bg-orange mt-6'>
-          Register
+          Sign Up
         </button>
       </form>
     </div>
