@@ -26,3 +26,12 @@ export const getVenues = async () => {
     throw error;
   }
 };
+
+export const getVenuesRating = async () => {
+  try {
+    const response = await fetch(`${VENUES_URL}?sort=rating&limit=9`);
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};

@@ -2,25 +2,20 @@ import { useQuery } from '@tanstack/react-query';
 import { getVenues } from '../../../services/api';
 import VenueItem from '../VenueItem';
 
-const VenuesList = () => {
-  const {
-    isPending,
-    isError,
-    data: venues,
-    error,
-  } = useQuery({
-    queryKey: ['venues'],
-    queryFn: getVenues,
-  });
-
-  if (isPending) return <span>Loading...</span>;
-  if (isError) return `Error: ${error.message}`;
-
+const VenuesList = ({ venues }) => {
   return (
-    <div>
-      <h2>Venues</h2>
-      {venues?.map((venue) => (
-        <VenueItem key={venue.id} venue={venue} />
+    <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 md:w-11/12 mx-auto'>
+      {venues.map((venue) => (
+        <VenueItem
+          key={venue.id}
+          id={venue.id}
+          media={venue.media}
+          name={venue.name}
+          location={venue.location}
+          rating={venue.rating}
+          price={venue.price}
+          meta={venue.meta}
+        />
       ))}
     </div>
   );
