@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const queryClient = useQueryClient();
   const setIsUserLoggedIn = useBearStore((state) => state.setIsUserLoggedIn);
+  const setToken = useBearStore((state) => state.setToken);
+  const setUserInfo = useBearStore((state) => state.setUserInfo);
 
   const loginUserMutation = useMutation({
     mutationFn: loginUser,
@@ -16,6 +18,13 @@ const LoginForm = () => {
       console.log(data.accessToken);
       if (data.accessToken) {
         setIsUserLoggedIn(true);
+        setToken(data.accessToken);
+        setUserInfo({
+          name: data.name,
+          email: data.email,
+          avatar: data.avatar,
+          venueManager: data.venueManager,
+        });
         navigate('/profile');
       }
     },

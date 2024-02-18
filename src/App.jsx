@@ -12,6 +12,7 @@ import './App.css';
 import PrivateRoute from './components/PrivateRoute';
 import VenuesManager from './pages/VenuesManager';
 import LoginRoute from './components/LoginRoute';
+import Venue from './pages/Venue';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             path='/explore-destinations'
             element={<ExploreDestinations />}
           />
+          <Route path='/venue/:id' element={<Venue />} />
           <Route path='/contact-us' element={<ContactUs />} />
           <Route path='/about' element={<About />} />
           <Route path='*' element={<NotFound />} />

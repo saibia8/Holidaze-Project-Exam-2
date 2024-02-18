@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import { getProfileByName } from '../../services/api';
-import { useBearStore } from '../../state/state';
+import { useParams } from 'react-router-dom';
+import { getVenueById } from '../../services/api';
 
-const Profile = () => {
-  const name = useBearStore((state) => state.userInfo?.name);
-
+const Venue = () => {
+  let params = useParams();
+  const id = params.id;
   const {
     isPending,
     isError,
-    data: profile,
+    data: venue,
     error,
   } = useQuery({
-    queryKey: ['venues', name],
-    queryFn: () => getProfileByName(name),
+    queryKey: ['venues', id],
+    queryFn: () => getVenueById(id),
   });
 
   if (isPending)
@@ -31,11 +31,14 @@ const Profile = () => {
 
   return (
     <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-      <p>Profile page content: </p>
-      <h3>{profile.name}</h3>
-      <h3>{profile.email}</h3>
+      <div className='bg-yellow flex'>
+        <img src={venue.media[0]} alt={venue.name} className='w-40 h-30' />
+        <div className=''>
+          <h1>{venue.name}</h1>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Profile;
+export default Venue;

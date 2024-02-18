@@ -9,6 +9,8 @@ const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
   const setIsUserLoggedIn = useBearStore((state) => state.setIsUserLoggedIn);
+  const setToken = useBearStore((state) => state.setToken);
+  const setUserInfo = useBearStore((state) => state.setUserInfo);
 
   const navItems = [
     { link: 'Explore Destinations', path: 'explore-destinations' },
@@ -18,6 +20,8 @@ const Nav = () => {
 
   const logoutHandler = () => {
     setIsUserLoggedIn(false);
+    setToken(null);
+    setUserInfo(null);
     toggleMenu();
   };
 
