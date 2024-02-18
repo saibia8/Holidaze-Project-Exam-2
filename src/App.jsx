@@ -9,28 +9,58 @@ import Layout from './components/Layout';
 import ExploreDestinations from './pages/ExploreDestinations';
 import Profile from './pages/Profile';
 import './App.css';
+import PrivateRoute from './components/PrivateRoute';
+import VenuesManager from './pages/VenuesManager';
+import LoginRoute from './components/LoginRoute';
 
 function App() {
   return (
-    <>
-      <div>
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route path='/profile' element={<Profile />} />
-            <Route index element={<Home />} />
-            <Route
-              path='/explore-destinations'
-              element={<ExploreDestinations />}
-            />
-            <Route path='/register' element={<Register />} />
-            <Route path='/contact-us' element={<ContactUs />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/about' element={<About />} />
-            <Route path='*' element={<NotFound />} />
-          </Route>
-        </Routes>
-      </div>
-    </>
+    <div>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route
+            path='/explore-destinations'
+            element={<ExploreDestinations />}
+          />
+          <Route path='/contact-us' element={<ContactUs />} />
+          <Route path='/about' element={<About />} />
+          <Route path='*' element={<NotFound />} />
+          <Route
+            path='/register'
+            element={
+              <LoginRoute>
+                <Register />
+              </LoginRoute>
+            }
+          />
+          <Route
+            path='/login'
+            element={
+              <LoginRoute>
+                <Login />
+              </LoginRoute>
+            }
+          />
+          <Route
+            path='/profile'
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/venues-manager'
+            element={
+              <PrivateRoute>
+                <VenuesManager />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+      </Routes>
+    </div>
   );
 }
 

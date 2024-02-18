@@ -2,17 +2,26 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { loginUser } from '../../services/api';
+import { useBearStore } from '../../state/state';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const queryClient = useQueryClient();
+  const setIsUserLoggedIn = useBearStore((state) => state.setIsUserLoggedIn);
 
   const loginUserMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user', 'login'] });
-      console.log(data);
+      console.log(data.accessToken);
+      if (data.accessToken) {
+        setIsUserLoggedIn(true);
+        navigate('/profile');
+      }
     },
   });
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -35,7 +44,6 @@ const LoginForm = () => {
         email: values.emailId,
         password: values.password,
       };
-      console.log(data);
       loginUserMutation.mutate(data);
     },
   });

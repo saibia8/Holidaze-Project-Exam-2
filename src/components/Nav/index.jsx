@@ -3,15 +3,23 @@ import logo from '../../assets/logo.svg';
 import { CgProfile } from 'react-icons/cg';
 import { useState } from 'react';
 import { FaBars, FaXmark } from 'react-icons/fa6';
+import { useBearStore } from '../../state/state';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
+  const setIsUserLoggedIn = useBearStore((state) => state.setIsUserLoggedIn);
 
   const navItems = [
     { link: 'Explore Destinations', path: 'explore-destinations' },
     { link: 'Contact Us', path: 'contact-us' },
     { link: 'About', path: 'about' },
   ];
+
+  const logoutHandler = () => {
+    setIsUserLoggedIn(false);
+    toggleMenu();
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -47,21 +55,32 @@ const Nav = () => {
 
           {/* profile, sign up and login buttons  */}
           <div className='space-x-12 hidden md:flex items-center'>
-            <Link
-              to='profile'
-              className='lg:flex items-center hover:text-green'
-            >
-              <CgProfile className='mr-2' />
-              <span>Profile</span>
-            </Link>
-            <Link to='register'>
-              <button className='bg-secondary py-2 px-4 transition-all duration-300 rounded outline outline-green hover:text-secondary hover:bg-green'>
-                Sign Up
+            {isUserLoggedIn && (
+              <Link
+                to='profile'
+                className='lg:flex items-center hover:text-green'
+              >
+                <CgProfile className='mr-2' />
+                <span>Profile</span>
+              </Link>
+            )}
+            {isUserLoggedIn && (
+              <button className='btnPrimary' onClick={logoutHandler}>
+                Log Out
               </button>
-            </Link>
-            <Link to='login'>
-              <button className='btnPrimary'>Login</button>
-            </Link>
+            )}
+            {!isUserLoggedIn && (
+              <Link to='register'>
+                <button className='bg-secondary py-2 px-4 transition-all duration-300 rounded outline outline-green hover:text-secondary hover:bg-green'>
+                  Sign Up
+                </button>
+              </Link>
+            )}
+            {!isUserLoggedIn && (
+              <Link to='login'>
+                <button className='btnPrimary'>Login</button>
+              </Link>
+            )}
           </div>
 
           {/* mobile menu */}
@@ -95,22 +114,33 @@ const Nav = () => {
             {link}
           </NavLink>
         ))}
-        <Link
-          to='profile'
-          className='block pt-5 hover:text-green'
-          onClick={toggleMenu}
-        >
-          <CgProfile className='mr-2' />
-          <span>Profile</span>
-        </Link>
-        <Link to='register' className='block' onClick={toggleMenu}>
-          <button className='bg-secondary py-2 px-4 transition-all duration-300 rounded outline outline-2 outline-green hover:text-secondary hover:bg-green'>
-            Sign Up
+        {isUserLoggedIn && (
+          <Link
+            to='profile'
+            className='block pt-5 hover:text-green'
+            onClick={toggleMenu}
+          >
+            <CgProfile className='mr-2' />
+            <span>Profile</span>
+          </Link>
+        )}
+        {isUserLoggedIn && (
+          <button className='btnPrimary' onClick={logoutHandler}>
+            Log Out
           </button>
-        </Link>
-        <Link to='login' className='block' onClick={toggleMenu}>
-          <button className='btnPrimary'>Login</button>
-        </Link>
+        )}
+        {!isUserLoggedIn && (
+          <Link to='register' className='block' onClick={toggleMenu}>
+            <button className='bg-secondary py-2 px-4 transition-all duration-300 rounded outline outline-2 outline-green hover:text-secondary hover:bg-green'>
+              Sign Up
+            </button>
+          </Link>
+        )}
+        {!isUserLoggedIn && (
+          <Link to='login' className='block' onClick={toggleMenu}>
+            <button className='btnPrimary'>Login</button>
+          </Link>
+        )}
       </div>
     </>
   );
