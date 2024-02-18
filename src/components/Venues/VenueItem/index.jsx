@@ -7,7 +7,7 @@ import noImage from '../../../assets/no_image_available.png';
 
 const VenueItem = ({ id, media, location, name, rating, price, meta }) => {
   return (
-    <div className='border-2 border-green py-10 md:px-6 px-4 rounded-lg shadow-3xl'>
+    <div className='py-10 md:px-6 px-4 rounded-[35px] shadow-2xl hover:-translate-y-4 transition-all duration-300 cursor-pointer'>
       <div className='pb-5'>
         <img
           src={

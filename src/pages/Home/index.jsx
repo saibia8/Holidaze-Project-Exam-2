@@ -12,7 +12,7 @@ const comments = [
     name: 'Mike Nogala',
     comment:
       "I've been using Holidaze for all my business trips and it never disappoints. Great service!",
-    image: '',
+    image: 'src/assets/mikenogala.png',
     job: 'Student',
     place: 'Paris, France',
     rating: 5,
@@ -22,7 +22,7 @@ const comments = [
     name: 'Jane Smith',
     comment:
       'Holidaze made it so easy for me to find the perfect accommodation for my trip. I highly recommend it!',
-    image: '',
+    image: 'src/assets/janesmith.png',
     job: 'CEO',
     place: 'London, UK',
     rating: 4,
@@ -32,7 +32,7 @@ const comments = [
     name: 'John Doe',
     comment:
       'I had an amazing experience booking my vacation through Holidaze. The website was user-friendly and the customer service was top-notch.',
-    image: '',
+    image: 'src/assets/johndoe.png',
     job: 'Marketing Manager',
     place: 'New York, USA',
     rating: 5,
