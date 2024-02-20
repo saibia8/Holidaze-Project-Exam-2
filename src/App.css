@@ -24,3 +24,8 @@ nav {
 .btnSecondary {
   @apply bg-orange py-2 px-4 transition-all duration-300 rounded text-primary hover:bg-secondary hover:text-primary hover:outline hover:outline-orange;
 }
+
+.leaflet-container {
+  height: 400px;
+  width: 100%;
+}
