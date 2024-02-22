@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getVenueById } from '../../services/api';
 import star from '../../assets/Star.png';
 import breakfastImg from '../../assets/cafe.png';
@@ -8,8 +8,11 @@ import parkingImg from '../../assets/parking.png';
 import petsImg from '../../assets/footprint.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useBearStore } from '../../state/state';
 
 const Venue = () => {
+  const loc = useLocation();
+  const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
   let params = useParams();
   const id = params.id;
   const {
@@ -21,6 +24,16 @@ const Venue = () => {
     queryKey: ['venues', id],
     queryFn: () => getVenueById(id),
   });
+
+  let path = loc.pathname;
+  if (loc.pathname === `/venue/${id}`) {
+    path = '/';
+  }
+
+  const reserveHandler = (e) => {
+    e.preventDefault();
+    console.log(e.target.startDate.value);
+  };
 
   if (isPending)
     return (
@@ -155,7 +168,7 @@ const Venue = () => {
               <p className='text-primary text-xl font-bold pt-4'>
                 ${venue.price}/night
               </p>
-              <form action='submit'>
+              <form action='submit' onSubmit={reserveHandler}>
                 <div className='flex md:flex-row flex-col'>
                   <div className='mr-4 mt-8'>
                     <label htmlFor='startDate' className='font-bold'>
@@ -208,7 +221,6 @@ const Venue = () => {
                     <h3 className='font-bold text-lg'>$80</h3>
                   </div>
                 </div>
-                <div class='border-t border-green h-px w-full'></div>
                 <div className='flex md:flex-row flex-col justify-between mb-4'>
                   <div className='mr-4 mt-2'>
                     <h3 className='font-bold text-lg'>Total</h3>
@@ -217,9 +229,18 @@ const Venue = () => {
                     <h3 className='font-bold text-lg'>$880</h3>
                   </div>
                 </div>
-                <button className='w-full btnPrimary p-2 mt-4 mb-8'>
-                  Book Now
-                </button>
+                {isUserLoggedIn && (
+                  <button className='w-full btnPrimary p-2 mt-4 mb-8'>
+                    Reserve
+                  </button>
+                )}
+                {!isUserLoggedIn && (
+                  <Link to={`${path}login`}>
+                    <button className='w-full btnPrimary p-2 mt-4 mb-8'>
+                      Login to Reserve
+                    </button>
+                  </Link>
+                )}
               </form>
             </div>
           </div>

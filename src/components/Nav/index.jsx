@@ -33,7 +33,7 @@ const Nav = () => {
     <>
       <nav className='bg-secondary md:px-14 p-4 max-w-screen-2xl border-b mx-auto text-primary fixed top-0 right-0 left-0'>
         <div className='bg-secondary text-lg container mx-auto flex justify-between items-center font-medium'>
-          <div className='flex space-x-14 items-center'>
+          <div className='flex space-x-8 items-center'>
             {/* logo */}
             <Link to='/'>
               <img
@@ -60,13 +60,24 @@ const Nav = () => {
           {/* profile, sign up and login buttons  */}
           <div className='space-x-12 hidden md:flex items-center'>
             {isUserLoggedIn && (
-              <Link
-                to='profile'
-                className='lg:flex items-center hover:text-green'
-              >
-                <CgProfile className='mr-2' />
-                <span>Profile</span>
-              </Link>
+              <details className='dropdown'>
+                <summary className='m-1 btn border-1 border-green'>
+                  <CgProfile className='mr-2' color='#1F5152' />
+                  <span className='text-green'>Profile</span>
+                </summary>
+
+                <ul className='p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 border-[1px] border-green'>
+                  <li>
+                    <Link to='profile'>My Account</Link>
+                  </li>
+                  <li>
+                    <Link to='my-bookings'>Upcoming Bookings</Link>
+                  </li>
+                  <li>
+                    <Link to='my-bookings'>Manage Venues</Link>
+                  </li>
+                </ul>
+              </details>
             )}
             {isUserLoggedIn && (
               <button className='btnPrimary' onClick={logoutHandler}>
@@ -119,14 +130,30 @@ const Nav = () => {
           </NavLink>
         ))}
         {isUserLoggedIn && (
-          <Link
-            to='profile'
-            className='block pt-5 hover:text-green'
-            onClick={toggleMenu}
-          >
-            <CgProfile className='mr-2' />
-            <span>Profile</span>
-          </Link>
+          <details className='dropdown'>
+            <summary className='m-1 btn border-1 border-green'>
+              <CgProfile className='mr-2' color='#1F5152' />
+              <span className='text-green'>Profile</span>
+            </summary>
+
+            <ul className='p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 border-[1px] border-green'>
+              <li>
+                <Link to='profile' onClick={toggleMenu}>
+                  My Account
+                </Link>
+              </li>
+              <li>
+                <Link to='my-bookings' onClick={toggleMenu}>
+                  Upcoming Bookings
+                </Link>
+              </li>
+              <li>
+                <Link to='my-bookings' onClick={toggleMenu}>
+                  Manage Venues
+                </Link>
+              </li>
+            </ul>
+          </details>
         )}
         {isUserLoggedIn && (
           <button className='btnPrimary' onClick={logoutHandler}>
