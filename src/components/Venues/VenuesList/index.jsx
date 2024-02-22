@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { getVenues } from '../../../services/api';
 import VenueItem from '../VenueItem';
 
 const VenuesList = ({ venues }) => {

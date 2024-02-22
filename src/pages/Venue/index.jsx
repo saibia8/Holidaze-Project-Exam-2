@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { getVenueById } from '../../services/api';
+import { getVenueById, reserveBooking } from '../../services/api';
 import star from '../../assets/Star.png';
 import breakfastImg from '../../assets/cafe.png';
 import wifiImg from '../../assets/wiFi.png';
@@ -9,8 +9,13 @@ import petsImg from '../../assets/footprint.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useBearStore } from '../../state/state';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useEffect, useState } from 'react';
 
 const Venue = () => {
+  const [nights, setNights] = useState(1);
+  const queryClient = useQueryClient();
   const loc = useLocation();
   const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
   let params = useParams();
@@ -25,15 +30,56 @@ const Venue = () => {
     queryFn: () => getVenueById(id),
   });
 
+  const reserveBookingMutation = useMutation({
+    mutationFn: reserveBooking,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      console.log(data);
+    },
+  });
+
+  const todayDate = new Date().toISOString().split('T')[0];
+  const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1))
+    .toISOString()
+    .split('T')[0];
+
+  const formik3 = useFormik({
+    initialValues: {
+      startDate: todayDate,
+      endDate: tomorrowDate,
+      guests: 1,
+    },
+    validationSchema: Yup.object({
+      startDate: Yup.string().required('Please enter check in date.'),
+      endDate: Yup.string().required('Please enter check out date.'),
+      guests: Yup.number()
+        .min(1, 'Number of guests cannot be less than 1')
+        .required('Please enter number of guests.'),
+    }),
+    onSubmit: (values) => {
+      const data = {
+        venueId: id,
+        dateFrom: values.startDate,
+        dateTo: values.endDate,
+        guests: values.guests,
+      };
+      console.log(data);
+      reserveBookingMutation.mutate(data);
+    },
+  });
+
+  useEffect(() => {
+    const date1 = new Date(formik3.values.startDate);
+    const date2 = new Date(formik3.values.endDate);
+    const diffTime = Math.abs(date2 - date1);
+    const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    setNights(days);
+  }, [formik3.values.startDate, formik3.values.endDate]);
+
   let path = loc.pathname;
   if (loc.pathname === `/venue/${id}`) {
     path = '/';
   }
-
-  const reserveHandler = (e) => {
-    e.preventDefault();
-    console.log(e.target.startDate.value);
-  };
 
   if (isPending)
     return (
@@ -168,7 +214,7 @@ const Venue = () => {
               <p className='text-primary text-xl font-bold pt-4'>
                 ${venue.price}/night
               </p>
-              <form action='submit' onSubmit={reserveHandler}>
+              <form action='submit' onSubmit={formik3.handleSubmit}>
                 <div className='flex md:flex-row flex-col'>
                   <div className='mr-4 mt-8'>
                     <label htmlFor='startDate' className='font-bold'>
@@ -177,9 +223,21 @@ const Venue = () => {
                     <input
                       type='date'
                       id='startDate'
+                      min={new Date().toISOString().split('T')[0]}
                       name='startDate'
-                      className='w-full bg-secondary border-2 border-green rounded-lg p-2 mt-2 mr-2'
+                      onChange={formik3.handleChange}
+                      value={formik3.values.startDate}
+                      className={`w-full bg-secondary border-2 ${
+                        formik3.errors.startDate
+                          ? 'border-red-500'
+                          : 'border-green'
+                      } rounded-lg p-2 mt-2 mr-2`}
                     />
+                    {formik3.touched.startDate && formik3.errors.startDate ? (
+                      <div className=' text-red-500'>
+                        {formik3.errors.startDate}
+                      </div>
+                    ) : null}
                   </div>
                   <div className='mr-4 mt-8'>
                     <label htmlFor='endDate' className='font-bold'>
@@ -189,8 +247,24 @@ const Venue = () => {
                       type='date'
                       id='endDate'
                       name='endDate'
-                      className='w-full bg-secondary border-2 border-green rounded-lg p-2 mt-2'
+                      min={
+                        new Date(new Date().setDate(new Date().getDate() + 1))
+                          .toISOString()
+                          .split('T')[0]
+                      }
+                      onChange={formik3.handleChange}
+                      value={formik3.values.endDate}
+                      className={`w-full bg-secondary border-2 ${
+                        formik3.errors.endDate
+                          ? 'border-red-500'
+                          : 'border-green'
+                      } rounded-lg p-2 mt-2`}
                     />
+                    {formik3.touched.endDate && formik3.errors.endDate ? (
+                      <div className=' text-red-500'>
+                        {formik3.errors.endDate}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
                 <div className='mr-4 mt-4 pb-5 flex flex-col'>
@@ -202,15 +276,26 @@ const Venue = () => {
                     min={1}
                     id='guests'
                     name='guests'
-                    className='w-1/2 bg-secondary border-2 border-green rounded-lg p-2 mt-2 mr-2'
+                    onChange={formik3.handleChange}
+                    value={formik3.values.guests}
+                    className={`w-1/2 bg-secondary border-2 ${
+                      formik3.errors.guests ? 'border-red-500' : 'border-green'
+                    } rounded-lg p-2 mt-2 mr-2`}
                   />
+                  {formik3.touched.guests && formik3.errors.guests ? (
+                    <div className=' text-red-500'>{formik3.errors.guests}</div>
+                  ) : null}
                 </div>
                 <div className='flex md:flex-row flex-col justify-between'>
                   <div className='mr-4 mt-6'>
-                    <h3 className='font-bold text-lg'>{`$${venue.price} x 4 nights`}</h3>
+                    <h3 className='font-bold text-lg'>{`$${
+                      venue.price
+                    } x ${nights} night${nights !== 1 ? 's' : ''}`}</h3>
                   </div>
                   <div className='mr-4 mt-8'>
-                    <h3 className='font-bold text-lg'>$800</h3>
+                    <h3 className='font-bold text-lg'>
+                      ${venue.price * nights}
+                    </h3>
                   </div>
                 </div>
                 <div className='flex md:flex-row flex-col justify-between mb-2'>
@@ -221,12 +306,15 @@ const Venue = () => {
                     <h3 className='font-bold text-lg'>$80</h3>
                   </div>
                 </div>
+                <div className='border-[1px] border-green' />
                 <div className='flex md:flex-row flex-col justify-between mb-4'>
                   <div className='mr-4 mt-2'>
                     <h3 className='font-bold text-lg'>Total</h3>
                   </div>
                   <div className='mr-4 mt-2'>
-                    <h3 className='font-bold text-lg'>$880</h3>
+                    <h3 className='font-bold text-lg'>
+                      ${venue.price * nights + 80}
+                    </h3>
                   </div>
                 </div>
                 {isUserLoggedIn && (
@@ -236,7 +324,10 @@ const Venue = () => {
                 )}
                 {!isUserLoggedIn && (
                   <Link to={`${path}login`}>
-                    <button className='w-full btnPrimary p-2 mt-4 mb-8'>
+                    <button
+                      type='button'
+                      className='w-full btnPrimary p-2 mt-4 mb-8'
+                    >
                       Login to Reserve
                     </button>
                   </Link>
