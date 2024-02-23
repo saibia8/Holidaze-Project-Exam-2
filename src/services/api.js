@@ -6,7 +6,6 @@ const PROFILE_URL = `${BASE_URL}/holidaze/profiles`;
 const BOOKINGS_URL = `${BASE_URL}/holidaze/bookings`;
 const STORE_DATA = JSON.parse(localStorage.getItem('store'));
 const TOKEN = STORE_DATA.state.token;
-const NAME = STORE_DATA.state.userInfo.name;
 
 export const registerUser = async (data) => {
   try {
@@ -67,12 +66,30 @@ export const getVenuesRating = async () => {
   }
 };
 
+export const getVenuesByName = async () => {
+  const NAME = STORE_DATA.state.userInfo.name;
+  try {
+    const response = await fetch(
+      `${PROFILE_URL}/${NAME}/venues?_owner=true&_bookings=true`,
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+    );
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getProfileByName = async (name) => {
   try {
     const response = await fetch(
       `${PROFILE_URL}/${name}?_bookings=true&_venues=true`,
       {
         headers: {
+          accept: 'application/json',
           Authorization: `Bearer ${TOKEN}`,
         },
       }
@@ -116,9 +133,27 @@ export const deleteBookingById = async (id) => {
 };
 
 export const updateProfile = async (data) => {
+  const NAME = STORE_DATA.state.userInfo.name;
   try {
     const response = await fetch(`${PROFILE_URL}/${NAME}/media`, {
       method: 'PUT',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createVenue = async (data) => {
+  try {
+    const response = await fetch(`${VENUES_URL}?_owner=true&_bookings=true`, {
+      method: 'POST',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',

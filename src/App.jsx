@@ -14,6 +14,8 @@ import VenuesManager from './pages/VenuesManager';
 import LoginRoute from './components/LoginRoute';
 import Venue from './pages/Venue';
 import ProfileUpdate from './pages/ProfileUpdate';
+import VenueManagerRoute from './components/VenueManagerRoute';
+import CreateVenue from './pages/CreateVenue';
 
 function App() {
   return (
@@ -28,7 +30,7 @@ function App() {
           <Route path='/venue/:id' element={<Venue />} />
           <Route path='/contact-us' element={<ContactUs />} />
           <Route path='/about' element={<About />} />
-          <Route path='*' element={<NotFound />} />
+
           <Route
             path='/register'
             element={
@@ -64,11 +66,20 @@ function App() {
           <Route
             path='/venues-manager'
             element={
-              <PrivateRoute>
+              <VenueManagerRoute>
                 <VenuesManager />
-              </PrivateRoute>
+              </VenueManagerRoute>
             }
           />
+          <Route
+            path='/create-venue'
+            element={
+              <VenueManagerRoute>
+                <CreateVenue />
+              </VenueManagerRoute>
+            }
+          />
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </div>

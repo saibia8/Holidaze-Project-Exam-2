@@ -62,7 +62,7 @@ const Nav = () => {
             {isUserLoggedIn && (
               <details className='dropdown'>
                 <summary className='m-1 btn border-1 border-green'>
-                  <CgProfile className='mr-2' color='#1F5152' />
+                  <CgProfile className='mr-2 w-6 h-6' color='#1F5152' />
                   <span className='text-green'>Profile</span>
                 </summary>
 
@@ -74,7 +74,7 @@ const Nav = () => {
                     <Link to='my-bookings'>Upcoming Bookings</Link>
                   </li>
                   <li>
-                    <Link to='my-bookings'>Manage Venues</Link>
+                    <Link to='/venues-manager'>Manage Venues</Link>
                   </li>
                 </ul>
               </details>
@@ -148,7 +148,7 @@ const Nav = () => {
                 </Link>
               </li>
               <li>
-                <Link to='my-bookings' onClick={toggleMenu}>
+                <Link to='/venues-manager' onClick={toggleMenu}>
                   Manage Venues
                 </Link>
               </li>

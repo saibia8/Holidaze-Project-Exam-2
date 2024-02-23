@@ -77,9 +77,12 @@ const Profile = () => {
           <h1 className='fontPrimary text-2xl md:text-4xl font-bold mb-4 text-center mt-4'>
             Unlock Your Venue's Potential: Register New Venue Now!
           </h1>
-          <button className='btnPrimary py-1 w-2/3 mx-auto'>
+          <Link
+            to='/create-venue'
+            className='btnPrimary py-1 w-2/3 mx-auto text-center'
+          >
             REGISTER NEW VENUE
-          </button>
+          </Link>
         </div>
       )}
       <div className={`pt-6 pb-6 ${profile.venueManager && 'bg-yellow'}`}>

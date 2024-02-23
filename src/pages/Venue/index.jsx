@@ -328,14 +328,11 @@ const Venue = () => {
                   </button>
                 )}
                 {!isUserLoggedIn && (
-                  <Link to={`${path}login`}>
-                    <button
-                      type='button'
-                      className='w-full btnPrimary p-2 mt-4 mb-8'
-                    >
+                  <div className='flex pb-10 pt-5 justify-center'>
+                    <Link to={`${path}login`} className='btnPrimary'>
                       Login to Reserve
-                    </button>
-                  </Link>
+                    </Link>
+                  </div>
                 )}
               </form>
             </div>
