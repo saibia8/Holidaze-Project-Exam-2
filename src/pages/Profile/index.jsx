@@ -3,6 +3,7 @@ import { getProfileByName } from '../../services/api';
 import { useBearStore } from '../../state/state';
 import profilePicture from '../../assets/profilePictureDefault.png';
 import BookingsList from '../../components/Bookings/BookingsList';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const name = useBearStore((state) => state.userInfo?.name);
@@ -48,6 +49,7 @@ const Profile = () => {
             <img
               src={profile.avatar === '' ? profilePicture : profile.avatar}
               alt=''
+              className='rounded-full'
             />
           </div>
           <div className='pt-4'>
@@ -57,9 +59,11 @@ const Profile = () => {
             <h3 className='mb-8 text-lg'>
               <span className='font-bold'>Email:</span> {profile.email}
             </h3>
-            <button className='bg-yellow w-full py-1 px-4 transition-all duration-300 rounded outline outline-2 outline-green hover:text-yellow hover:bg-green'>
-              Update Profile
-            </button>
+            <Link to='/profile-update'>
+              <button className='bg-yellow w-full py-1 px-4 transition-all duration-300 rounded outline outline-2 outline-green hover:text-yellow hover:bg-green'>
+                Update Profile
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -69,8 +73,8 @@ const Profile = () => {
         </div>
       )}
       {profile.venueManager && (
-        <div className='bg-secondary p-8 flex flex-col justify-center'>
-          <h1 className='fontPrimary text-2xl md:text-3xl font-bold mb-4 text-center'>
+        <div className='bg-secondary p-10 flex flex-col justify-center'>
+          <h1 className='fontPrimary text-2xl md:text-4xl font-bold mb-4 text-center mt-4'>
             Unlock Your Venue's Potential: Register New Venue Now!
           </h1>
           <button className='btnPrimary py-1 w-2/3 mx-auto'>
@@ -78,8 +82,8 @@ const Profile = () => {
           </button>
         </div>
       )}
-      <div>
-        <h1 className='fontPrimary text-2xl md:text-4xl font-bold text-center mb-4 mt-10'>
+      <div className={`pt-6 pb-6 ${profile.venueManager && 'bg-yellow'}`}>
+        <h1 className='fontPrimary text-2xl md:text-4xl font-bold text-center mb-4 mt-8'>
           Your upcoming bookings
         </h1>
         <BookingsList bookings={profile.bookings} />

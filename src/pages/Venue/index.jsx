@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getVenueById, reserveBooking } from '../../services/api';
 import star from '../../assets/Star.png';
 import breakfastImg from '../../assets/cafe.png';
@@ -17,6 +17,8 @@ const Venue = () => {
   const [nights, setNights] = useState(1);
   const queryClient = useQueryClient();
   const loc = useLocation();
+  const navigate = useNavigate();
+  const name = useBearStore((state) => state.userInfo?.name);
   const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
   let params = useParams();
   const id = params.id;
@@ -33,8 +35,11 @@ const Venue = () => {
   const reserveBookingMutation = useMutation({
     mutationFn: reserveBooking,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      queryClient.invalidateQueries({ queryKey: ['venues', name] });
       console.log(data);
+      if (data.id) {
+        navigate('/profile');
+      }
     },
   });
 

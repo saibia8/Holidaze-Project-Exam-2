@@ -6,6 +6,7 @@ const PROFILE_URL = `${BASE_URL}/holidaze/profiles`;
 const BOOKINGS_URL = `${BASE_URL}/holidaze/bookings`;
 const STORE_DATA = JSON.parse(localStorage.getItem('store'));
 const TOKEN = STORE_DATA.state.token;
+const NAME = STORE_DATA.state.userInfo.name;
 
 export const registerUser = async (data) => {
   try {
@@ -107,6 +108,23 @@ export const deleteBookingById = async (id) => {
         accept: 'application/json',
         Authorization: `Bearer ${TOKEN}`,
       },
+    });
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateProfile = async (data) => {
+  try {
+    const response = await fetch(`${PROFILE_URL}/${NAME}/media`, {
+      method: 'PUT',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify(data),
     });
     return response.json();
   } catch (error) {

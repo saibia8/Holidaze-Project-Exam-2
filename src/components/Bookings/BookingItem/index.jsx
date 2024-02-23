@@ -42,7 +42,7 @@ const BookingItem = ({
   return (
     <>
       <div onClick={navigateToVenue}>
-        <div className='py-10 md:px-6 px-4 rounded-[35px] shadow-2xl hover:-translate-y-4 transition-all duration-300 cursor-pointer'>
+        <div className='bg-secondary py-10 md:px-6 px-4 rounded-[35px] shadow-2xl hover:-translate-y-4 transition-all duration-300 cursor-pointer'>
           <div className='pb-5'>
             <img
               src={

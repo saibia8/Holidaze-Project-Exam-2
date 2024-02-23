@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute';
 import VenuesManager from './pages/VenuesManager';
 import LoginRoute from './components/LoginRoute';
 import Venue from './pages/Venue';
+import ProfileUpdate from './pages/ProfileUpdate';
 
 function App() {
   return (
@@ -49,6 +50,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/profile-update'
+            element={
+              <PrivateRoute>
+                <ProfileUpdate />
               </PrivateRoute>
             }
           />

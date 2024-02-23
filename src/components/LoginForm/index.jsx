@@ -10,6 +10,9 @@ const LoginForm = () => {
   const setIsUserLoggedIn = useBearStore((state) => state.setIsUserLoggedIn);
   const setToken = useBearStore((state) => state.setToken);
   const setUserInfo = useBearStore((state) => state.setUserInfo);
+  const setIsUserVenueManager = useBearStore(
+    (state) => state.setIsUserVenueManager
+  );
 
   const loginUserMutation = useMutation({
     mutationFn: loginUser,
@@ -19,6 +22,7 @@ const LoginForm = () => {
       if (data.accessToken) {
         setIsUserLoggedIn(true);
         setToken(data.accessToken);
+        setIsUserVenueManager(data.venueManager);
         setUserInfo({
           name: data.name,
           email: data.email,
