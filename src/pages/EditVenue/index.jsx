@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
-import { getVenueById, updateVenue } from '../../services/api';
+import { deleteVenueById, getVenueById, updateVenue } from '../../services/api';
 
 const EditVenue = () => {
   const queryClient = useQueryClient();
   const params = useParams();
+  const navigate = useNavigate();
   const id = params.id;
 
   const {
@@ -21,6 +22,14 @@ const EditVenue = () => {
 
   const editVenueMutation = useMutation({
     mutationFn: ({ id, data }) => updateVenue(id, data),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['venues', 'user'] });
+      console.log(data);
+    },
+  });
+
+  const deleteVenueMutation = useMutation({
+    mutationFn: deleteVenueById,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', 'user'] });
       console.log(data);
@@ -109,6 +118,11 @@ const EditVenue = () => {
       editVenueMutation.mutate({ id, data: venue });
     },
   });
+
+  const deleteVenueHandler = () => {
+    deleteVenueMutation.mutate(id);
+    navigate('/venues-manager');
+  };
 
   if (isPending)
     return (
@@ -471,6 +485,21 @@ const EditVenue = () => {
               </button>
             </div>
           </form>
+        </div>
+        <div className='border-[1px] border-green mt-10' />
+        <div>
+          <h1 className='font-bold mt-4'>DELETE VENUE</h1>
+          <p className='mt-2 md:w-1/2'>
+            Warning: Deleting this venue will permanently remove it from your
+            account. You will lose access to all associated information and it
+            cannot be recovered.
+          </p>
+          <button
+            onClick={deleteVenueHandler}
+            className='btnPrimary mt-3 md:w-1/3 bg-red-500 hover:outline-red-500'
+          >
+            DELETE
+          </button>
         </div>
       </div>
     </div>

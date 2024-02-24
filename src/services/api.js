@@ -188,3 +188,18 @@ export const updateVenue = async (id, data) => {
     throw error;
   }
 };
+
+export const deleteVenueById = async (id) => {
+  try {
+    const response = await fetch(`${VENUES_URL}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    });
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
