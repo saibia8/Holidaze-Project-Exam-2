@@ -4,18 +4,23 @@ import parkingImg from '../../../assets/parking.png';
 import petsImg from '../../../assets/footprint.png';
 import star from '../../../assets/Star.png';
 import noImage from '../../../assets/no_image_available.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const VenueItem = ({ id, media, location, name, rating, price, meta }) => {
-  const loc = useLocation();
-
-  let path = loc.pathname;
-  if (loc.pathname === '/explore-destinations') {
-    path = '/';
-  }
-
+const VenueItem = ({
+  id,
+  media,
+  location,
+  name,
+  rating,
+  price,
+  meta,
+  owner,
+}) => {
+  const NAME = owner
+    ? JSON.parse(localStorage.getItem('store')).state.userInfo.name
+    : '';
   return (
-    <Link to={`${path}venue/${id}`}>
+    <Link to={`/venue/${id}`}>
       <div className='bg-secondary py-10 md:px-6 px-4 rounded-[35px] shadow-2xl hover:-translate-y-4 transition-all duration-300 cursor-pointer'>
         <div className='pb-5'>
           <img
@@ -75,9 +80,18 @@ const VenueItem = ({ id, media, location, name, rating, price, meta }) => {
             </p>
           </div>
         </div>
-        <div className='w-full mx-auto mt-8 flex items-center justify-center'>
-          <button className='btnSecondary rounded-xl'>Book</button>
-        </div>
+        {!owner && (
+          <div className='w-full mx-auto mt-8 flex items-center justify-center'>
+            <button className='btnSecondary rounded-xl'>Book</button>
+          </div>
+        )}
+        {owner && NAME === owner.name && (
+          <div className='w-full mx-auto mt-8 flex items-center justify-center'>
+            <Link to={`/venue-edit/${id}/`} className='btnSecondary rounded-xl'>
+              Edit
+            </Link>
+          </div>
+        )}
       </div>
     </Link>
   );

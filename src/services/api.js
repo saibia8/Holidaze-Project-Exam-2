@@ -166,3 +166,25 @@ export const createVenue = async (data) => {
     throw error;
   }
 };
+
+export const updateVenue = async (id, data) => {
+  try {
+    console.log(id);
+    console.log(data);
+    const response = await fetch(
+      `${VENUES_URL}/${id}?_owner=true&_bookings=true`,
+      {
+        method: 'PUT',
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};

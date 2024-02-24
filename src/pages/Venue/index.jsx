@@ -12,6 +12,7 @@ import { useBearStore } from '../../state/state';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
+import noImage from '../../assets/no_image_available.svg';
 
 const Venue = () => {
   const [nights, setNights] = useState(1);
@@ -105,7 +106,7 @@ const Venue = () => {
       <div className='bg-yellow flex md:flex-row flex-col justify-between'>
         <div className='m-10 flex flex-col md:flex-row'>
           <img
-            src={venue.media[0]}
+            src={venue.media[0] ? venue.media[0] : noImage}
             alt={venue.name}
             className='h-70 w-60 object-cover rounded-2xl'
           />
@@ -196,7 +197,6 @@ const Venue = () => {
             <div className='mt-4'>
               <MapContainer
                 center={[venue.location.lat, venue.location.lng]}
-                //center={[48.8566, 2.3522]}
                 zoom={13}
               >
                 <TileLayer
@@ -322,7 +322,14 @@ const Venue = () => {
                     </h3>
                   </div>
                 </div>
-                {isUserLoggedIn && (
+                {isUserLoggedIn && name === venue.owner.name && (
+                  <div className='flex pb-10 pt-5 justify-center'>
+                    <Link to={`/venue-edit/${id}/`} className='btnSecondary'>
+                      Edit Your Venue
+                    </Link>
+                  </div>
+                )}
+                {isUserLoggedIn && name !== venue.owner.name && (
                   <button className='w-full btnPrimary p-2 mt-4 mb-8'>
                     Reserve
                   </button>

@@ -13,6 +13,7 @@ const VenuesList = ({ venues }) => {
           rating={venue.rating}
           price={venue.price}
           meta={venue.meta}
+          owner={venue.owner}
         />
       ))}
     </div>

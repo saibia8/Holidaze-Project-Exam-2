@@ -16,6 +16,7 @@ import Venue from './pages/Venue';
 import ProfileUpdate from './pages/ProfileUpdate';
 import VenueManagerRoute from './components/VenueManagerRoute';
 import CreateVenue from './pages/CreateVenue';
+import EditVenue from './pages/EditVenue';
 
 function App() {
   return (
@@ -76,6 +77,14 @@ function App() {
             element={
               <VenueManagerRoute>
                 <CreateVenue />
+              </VenueManagerRoute>
+            }
+          />
+          <Route
+            path='/venue-edit/:id'
+            element={
+              <VenueManagerRoute>
+                <EditVenue />
               </VenueManagerRoute>
             }
           />
