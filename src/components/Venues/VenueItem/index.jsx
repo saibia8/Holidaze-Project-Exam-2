@@ -4,7 +4,7 @@ import parkingImg from '../../../assets/parking.png';
 import petsImg from '../../../assets/footprint.png';
 import star from '../../../assets/Star.png';
 import noImage from '../../../assets/no_image_available.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const VenueItem = ({
   id,
@@ -19,8 +19,19 @@ const VenueItem = ({
   const NAME = owner
     ? JSON.parse(localStorage.getItem('store')).state.userInfo.name
     : '';
+  const navigate = useNavigate();
+
+  const navigateToVenueID = () => {
+    navigate(`/venue/${id}`);
+  };
+
+  const navigateToUpdateId = (e) => {
+    e.stopPropagation();
+    navigate(`/venue-edit/${id}`);
+  };
+
   return (
-    <Link to={`/venue/${id}`}>
+    <div onClick={navigateToVenueID}>
       <div className='bg-secondary py-10 md:px-6 px-4 rounded-[35px] shadow-2xl hover:-translate-y-4 transition-all duration-300 cursor-pointer'>
         <div className='pb-5'>
           <img
@@ -87,13 +98,16 @@ const VenueItem = ({
         )}
         {owner && NAME === owner.name && (
           <div className='w-full mx-auto mt-8 flex items-center justify-center'>
-            <Link to={`/venue-edit/${id}/`} className='btnSecondary rounded-xl'>
+            <button
+              onClick={navigateToUpdateId}
+              className='btnSecondary rounded-xl'
+            >
               Edit
-            </Link>
+            </button>
           </div>
         )}
       </div>
-    </Link>
+    </div>
   );
 };
 
