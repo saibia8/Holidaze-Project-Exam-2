@@ -4,7 +4,7 @@ import parkingImg from '../../../assets/parking.png';
 import petsImg from '../../../assets/footprint.png';
 import star from '../../../assets/Star.png';
 import noImage from '../../../assets/no_image_available.png';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const BookingItem = ({
   bookingId,
@@ -17,13 +17,7 @@ const BookingItem = ({
   meta,
   openModal,
 }) => {
-  const loc = useLocation();
   const navigate = useNavigate();
-
-  let path = loc.pathname;
-  if (loc.pathname === '/profile') {
-    path = '/';
-  }
 
   const updateBookingHandler = (e) => {
     e.stopPropagation();
@@ -36,7 +30,7 @@ const BookingItem = ({
   };
 
   const navigateToVenue = () => {
-    navigate(`${path}venue/${venueId}`);
+    navigate(`/venue/${venueId}`);
   };
 
   return (
