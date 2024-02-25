@@ -39,19 +39,19 @@ The Holidaze project had specific technical requirements. However, I was free to
 ## Getting Started
 1. Clone the repo
   ```sh
-   https://github.com/saibia8/Holidaze-Project-Exam-2
+  https://github.com/saibia8/Holidaze-Project-Exam-2
   ```
 2. Install npm packages
   ```sh
-    npm install
+  npm install
   ```
-3. Run build
-  ```
-  npm run build
-  ```
-4. Start the development server
+3. Start the development server
   ```
   npm run dev
+  ```
+4. Build 
+  ```
+  npm run build
   ```
 
 ## Contributing
