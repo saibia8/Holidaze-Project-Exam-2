@@ -39,7 +39,9 @@ export const loginUser = async (data) => {
 
 export const getVenues = async () => {
   try {
-    const response = await fetch(`${VENUES_URL}?sort=created`);
+    const response = await fetch(
+      `${VENUES_URL}?sort=created&_owner=true&_bookings=true`
+    );
     return response.json();
   } catch (error) {
     throw error;

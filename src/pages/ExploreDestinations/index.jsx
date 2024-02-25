@@ -18,7 +18,12 @@ const ExploreDestinations = () => {
 
   const searchHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.startDate.value);
+    const destination = e.target.destination.value;
+    const startDate = e.target.startDate.value;
+    const endDate = e.target.endDate.value;
+    const guests = e.target.guests.value;
+
+    console.log(destination, startDate, endDate, guests);
   };
 
   return (
@@ -31,7 +36,7 @@ const ExploreDestinations = () => {
           Explore a wide variety of venues for your next event or getaway.
         </h3>
         <div className='bg-green md:px-6 px-4 rounded-lg shadow-3xl h-fit w-3/4 mx-auto mb-10'>
-          <form action='submit' onSubmit={searchHandler}>
+          <form onSubmit={searchHandler}>
             <div className='flex md:flex-row flex-col'>
               <div className='mr-4 mt-8'>
                 <label

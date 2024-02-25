@@ -13,11 +13,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import noImage from '../../assets/no_image_available.svg';
+import CalendarPicker from '../../components/CalendarPicker';
 
 const Venue = () => {
   const [nights, setNights] = useState(1);
   const queryClient = useQueryClient();
-  const loc = useLocation();
   const navigate = useNavigate();
   const name = useBearStore((state) => state.userInfo?.name);
   const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
@@ -39,25 +39,22 @@ const Venue = () => {
       queryClient.invalidateQueries({ queryKey: ['venues', name] });
       console.log(data);
       if (data.id) {
-        navigate('/profile');
+        //navigate('/profile');
       }
     },
   });
 
-  const todayDate = new Date().toISOString().split('T')[0];
-  const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1))
-    .toISOString()
-    .split('T')[0];
-
   const formik3 = useFormik({
     initialValues: {
-      startDate: todayDate,
-      endDate: tomorrowDate,
+      startDate: new Date(),
+      endDate: new Date(),
       guests: 1,
     },
     validationSchema: Yup.object({
-      startDate: Yup.string().required('Please enter check in date.'),
-      endDate: Yup.string().required('Please enter check out date.'),
+      startDate: Yup.date().required('Start date is required'),
+      endDate: Yup.date()
+        .min(Yup.ref('startDate'), 'End date cannot be before start date')
+        .required('End date is required'),
       guests: Yup.number()
         .min(1, 'Number of guests cannot be less than 1')
         .required('Please enter number of guests.'),
@@ -74,18 +71,13 @@ const Venue = () => {
     },
   });
 
-  useEffect(() => {
-    const date1 = new Date(formik3.values.startDate);
-    const date2 = new Date(formik3.values.endDate);
-    const diffTime = Math.abs(date2 - date1);
-    const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    setNights(days);
-  }, [formik3.values.startDate, formik3.values.endDate]);
-
-  let path = loc.pathname;
-  if (loc.pathname === `/venue/${id}`) {
-    path = '/';
-  }
+  // useEffect(() => {
+  //   const date1 = new Date(formik3.values.startDate);
+  //   const date2 = new Date(formik3.values.endDate);
+  //   const diffTime = Math.abs(date2 - date1);
+  //   const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  //   setNights(days);
+  // }, [formik3.values.startDate, formik3.values.endDate]);
 
   if (isPending)
     return (
@@ -220,12 +212,36 @@ const Venue = () => {
                 ${venue.price}/night
               </p>
               <form action='submit' onSubmit={formik3.handleSubmit}>
-                <div className='flex md:flex-row flex-col'>
-                  <div className='mr-4 mt-8'>
-                    <label htmlFor='startDate' className='font-bold'>
-                      Check-In Date
-                    </label>
-                    <input
+                <div className='mr-4 mt-8 flex flex-col items-center'>
+                  <label
+                    htmlFor='startDate'
+                    className='font-bold text-center mb-3'
+                  >
+                    Select Dates
+                  </label>
+                  <CalendarPicker
+                    id='startDate'
+                    name='startDate'
+                    startDate={formik3.values.startDate}
+                    endDate={formik3.values.endDate}
+                    formik={formik3}
+                    bookings={venue.bookings}
+                    onChange={({ startDate, endDate }) => {
+                      formik3.setFieldValue('startDate', startDate);
+                      formik3.setFieldValue('endDate', endDate);
+                    }}
+                  />
+                  {formik3.touched.startDate && formik3.errors.startDate ? (
+                    <div className=' text-red-500'>
+                      {formik3.errors.startDate}
+                    </div>
+                  ) : null}
+                  {formik3.touched.endDate && formik3.errors.endDate ? (
+                    <div className=' text-red-500'>
+                      {formik3.errors.endDate}
+                    </div>
+                  ) : null}
+                  {/* <input
                       type='date'
                       id='startDate'
                       min={new Date().toISOString().split('T')[0]}
@@ -242,9 +258,9 @@ const Venue = () => {
                       <div className=' text-red-500'>
                         {formik3.errors.startDate}
                       </div>
-                    ) : null}
-                  </div>
-                  <div className='mr-4 mt-8'>
+                    ) : null} */}
+                </div>
+                {/* <div className='mr-4 mt-8'>
                     <label htmlFor='endDate' className='font-bold'>
                       Check-Out Date
                     </label>
@@ -270,8 +286,8 @@ const Venue = () => {
                         {formik3.errors.endDate}
                       </div>
                     ) : null}
-                  </div>
-                </div>
+                  </div> */}
+
                 <div className='mr-4 mt-4 pb-5 flex flex-col'>
                   <label htmlFor='guests' className='font-bold'>
                     Guests
@@ -330,13 +346,16 @@ const Venue = () => {
                   </div>
                 )}
                 {isUserLoggedIn && name !== venue.owner.name && (
-                  <button className='w-full btnPrimary p-2 mt-4 mb-8'>
+                  <button
+                    type='submit'
+                    className='w-full btnPrimary p-2 mt-4 mb-8 bg-green'
+                  >
                     Reserve
                   </button>
                 )}
                 {!isUserLoggedIn && (
                   <div className='flex pb-10 pt-5 justify-center'>
-                    <Link to={`${path}login`} className='btnPrimary'>
+                    <Link to={`/login`} className='btnPrimary'>
                       Login to Reserve
                     </Link>
                   </div>
