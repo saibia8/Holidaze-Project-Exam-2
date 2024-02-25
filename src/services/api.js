@@ -59,6 +59,23 @@ export const getVenueById = async (id) => {
   }
 };
 
+export const getBookingById = async (id) => {
+  try {
+    const response = await fetch(
+      `${BOOKINGS_URL}/${id}/?_customer=true&_venue=true`,
+      {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+    );
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getVenuesRating = async () => {
   try {
     const response = await fetch(`${VENUES_URL}?sort=rating&limit=9`);
@@ -113,6 +130,26 @@ export const reserveBooking = async (data) => {
       },
       body: JSON.stringify(data),
     });
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateBooking = async (id, data) => {
+  try {
+    const response = await fetch(
+      `${BOOKINGS_URL}/${id}?_customers=true&_venue=true`,
+      {
+        method: 'PUT',
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
     return response.json();
   } catch (error) {
     throw error;

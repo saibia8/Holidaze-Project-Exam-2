@@ -21,7 +21,7 @@ const BookingItem = ({
 
   const updateBookingHandler = (e) => {
     e.stopPropagation();
-    console.log('update booking');
+    navigate(`/update-booking/${bookingId}?venueId=${venueId}`);
   };
 
   const confirmModalHandler = (e) => {
@@ -106,7 +106,7 @@ const BookingItem = ({
               onClick={updateBookingHandler}
               className='btnSecondary rounded-xl'
             >
-              Update
+              Info/Update
             </button>
             <button
               onClick={confirmModalHandler}

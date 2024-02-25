@@ -17,6 +17,7 @@ import ProfileUpdate from './pages/ProfileUpdate';
 import VenueManagerRoute from './components/VenueManagerRoute';
 import CreateVenue from './pages/CreateVenue';
 import EditVenue from './pages/EditVenue';
+import UpdateBooking from './pages/UpdateBooking';
 
 function App() {
   return (
@@ -61,6 +62,14 @@ function App() {
             element={
               <PrivateRoute>
                 <ProfileUpdate />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/update-booking/:id'
+            element={
+              <PrivateRoute>
+                <UpdateBooking />
               </PrivateRoute>
             }
           />

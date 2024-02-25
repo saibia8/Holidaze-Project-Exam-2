@@ -39,7 +39,7 @@ const Venue = () => {
       queryClient.invalidateQueries({ queryKey: ['venues', name] });
       console.log(data);
       if (data.id) {
-        //navigate('/profile');
+        navigate('/profile');
       }
     },
   });
@@ -71,13 +71,15 @@ const Venue = () => {
     },
   });
 
-  // useEffect(() => {
-  //   const date1 = new Date(formik3.values.startDate);
-  //   const date2 = new Date(formik3.values.endDate);
-  //   const diffTime = Math.abs(date2 - date1);
-  //   const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  //   setNights(days);
-  // }, [formik3.values.startDate, formik3.values.endDate]);
+  useEffect(() => {
+    if (formik3.values.startDate && formik3.values.endDate) {
+      const date1 = new Date(formik3.values.startDate);
+      const date2 = new Date(formik3.values.endDate);
+      const diffTime = Math.abs(date2 - date1);
+      const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      setNights(days);
+    }
+  }, [formik3.values.startDate, formik3.values.endDate]);
 
   if (isPending)
     return (
