@@ -4,8 +4,6 @@ const LOGIN_URL = `${BASE_URL}/holidaze/auth/login`;
 const VENUES_URL = `${BASE_URL}/holidaze/venues`;
 const PROFILE_URL = `${BASE_URL}/holidaze/profiles`;
 const BOOKINGS_URL = `${BASE_URL}/holidaze/bookings`;
-const STORE_DATA = JSON.parse(localStorage.getItem('store'));
-const TOKEN = STORE_DATA.state.token;
 
 export const registerUser = async (data) => {
   try {
@@ -60,6 +58,8 @@ export const getVenueById = async (id) => {
 };
 
 export const getBookingById = async (id) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(
       `${BOOKINGS_URL}/${id}/?_customer=true&_venue=true`,
@@ -77,6 +77,8 @@ export const getBookingById = async (id) => {
 };
 
 export const getBookingsByName = async () => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   const NAME = STORE_DATA.state.userInfo.name;
   try {
     const response = await fetch(
@@ -104,6 +106,8 @@ export const getVenuesRating = async () => {
 };
 
 export const getVenuesByName = async () => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   const NAME = STORE_DATA.state.userInfo.name;
   try {
     const response = await fetch(
@@ -121,6 +125,8 @@ export const getVenuesByName = async () => {
 };
 
 export const getProfileByName = async (name) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(
       `${PROFILE_URL}/${name}?_bookings=true&_venues=true`,
@@ -138,6 +144,8 @@ export const getProfileByName = async (name) => {
 };
 
 export const reserveBooking = async (data) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(`${BOOKINGS_URL}?_customer=true&_venue=true`, {
       method: 'POST',
@@ -155,6 +163,8 @@ export const reserveBooking = async (data) => {
 };
 
 export const updateBooking = async (id, data) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(
       `${BOOKINGS_URL}/${id}?_customers=true&_venue=true`,
@@ -175,6 +185,8 @@ export const updateBooking = async (id, data) => {
 };
 
 export const deleteBookingById = async (id) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(`${BOOKINGS_URL}/${id}`, {
       method: 'DELETE',
@@ -191,6 +203,8 @@ export const deleteBookingById = async (id) => {
 
 export const updateProfile = async (data) => {
   const NAME = STORE_DATA.state.userInfo.name;
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(`${PROFILE_URL}/${NAME}/media`, {
       method: 'PUT',
@@ -208,6 +222,8 @@ export const updateProfile = async (data) => {
 };
 
 export const createVenue = async (data) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(`${VENUES_URL}?_owner=true&_bookings=true`, {
       method: 'POST',
@@ -225,6 +241,8 @@ export const createVenue = async (data) => {
 };
 
 export const updateVenue = async (id, data) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     console.log(id);
     console.log(data);
@@ -247,6 +265,8 @@ export const updateVenue = async (id, data) => {
 };
 
 export const deleteVenueById = async (id) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
   try {
     const response = await fetch(`${VENUES_URL}/${id}`, {
       method: 'DELETE',
