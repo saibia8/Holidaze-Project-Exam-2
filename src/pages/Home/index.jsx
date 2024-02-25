@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import hoteltravel from '../../assets/Hotel-travel.png';
-import hotelrelax from '../../assets/Hotel-book-cocktail-calm-water-sunset-relax.png';
+import hoteltravel from '../../assets/Hotel-travel-palms-beach-sunset.jpg';
+import hotelrelax from '../../assets/Hotel-book-cocktail-calm-water-sunset-relax.jpg';
 import SearchForm from '../../components/SearchForm';
 import VenuesList from '../../components/Venues/VenuesList';
 import { getVenuesRating } from '../../services/api';
@@ -124,19 +124,21 @@ const Home = () => {
         </div>
       </div>
 
-      <div className='md:px-14 p-4 max-w-s mx-auto py-10'>
-        <div className='text-center'>
-          {/* customer testimonials */}
-          <h2 className='md:text-5xl text-3xl font-extrabold fontPrimary text-primary mb-2'>
-            Customer Testimonials
-          </h2>
-          <h3 className='md:text-2xl text-xl font-medium text-primary mb-8'>
-            Read what our customers have to say
-          </h3>
-        </div>
+      <div className='md:container md:mx-auto'>
+        <div className='md:px-14 p-4 max-w-s mx-auto py-10'>
+          <div className='text-center'>
+            {/* customer testimonials */}
+            <h2 className='md:text-5xl text-3xl font-extrabold fontPrimary text-primary mb-2'>
+              Customer Testimonials
+            </h2>
+            <h3 className='md:text-2xl text-xl font-medium text-primary mb-8'>
+              Read what our customers have to say
+            </h3>
+          </div>
 
-        {/* inserting cards with customers testimonials */}
-        <CustomerItem comments={comments} />
+          {/* inserting cards with customers testimonials */}
+          <CustomerItem comments={comments} />
+        </div>
       </div>
     </>
   );

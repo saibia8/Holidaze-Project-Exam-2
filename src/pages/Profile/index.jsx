@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { getProfileByName } from '../../services/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getProfileByName, updateVenueManager } from '../../services/api';
 import { useBearStore } from '../../state/state';
 import profilePicture from '../../assets/profilePictureDefault.png';
 import BookingsList from '../../components/Bookings/BookingsList';
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const name = useBearStore((state) => state.userInfo?.name);
+  const queryClient = useQueryClient();
 
   const {
     isPending,
@@ -17,6 +18,18 @@ const Profile = () => {
     queryKey: ['venues', name],
     queryFn: () => getProfileByName(name),
   });
+
+  const profileUpdateVenueManagerMutation = useMutation({
+    mutationFn: updateVenueManager,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['venues', name] });
+      console.log(data);
+    },
+  });
+
+  const updateToVenueManager = () => {
+    profileUpdateVenueManagerMutation.mutate({ venueManager: true });
+  };
 
   if (isPending)
     return (
@@ -69,12 +82,14 @@ const Profile = () => {
       </div>
       {!profile.venueManager && (
         <div className='bg-yellow p-8 flex justify-center'>
-          <button className='btnPrimary py-1'>Become A Venue Manager</button>
+          <button onClick={updateToVenueManager} className='btnPrimary py-1'>
+            Become A Venue Manager
+          </button>
         </div>
       )}
       {profile.venueManager && (
-        <div className='bg-secondary p-10 flex flex-col justify-center'>
-          <h1 className='fontPrimary text-2xl md:text-4xl font-bold mb-4 text-center mt-4'>
+        <div className='bg-secondary p-10 flex flex-col max-w-3xl m-auto'>
+          <h1 className='fontPrimary text-2xl md:text-4xl font-bold mb-7 text-center mt-4'>
             Unlock Your Venue's Potential: Register New Venue Now!
           </h1>
           <Link
@@ -85,7 +100,7 @@ const Profile = () => {
           </Link>
         </div>
       )}
-      <div className={`pt-6 pb-6 ${profile.venueManager && 'bg-yellow'}`}>
+      <div className={`pt-6 pb-12 ${profile.venueManager && 'bg-yellow'}`}>
         <h1 className='fontPrimary text-2xl md:text-4xl font-bold text-center mb-4 mt-8'>
           Your upcoming bookings
         </h1>

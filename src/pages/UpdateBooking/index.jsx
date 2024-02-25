@@ -15,7 +15,7 @@ import { useBearStore } from '../../state/state';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
-import noImage from '../../assets/no_image_available.svg';
+import noImage from '../../assets/No-image-icon.png';
 import CalendarPicker from '../../components/CalendarPicker';
 
 const UpdateBooking = () => {

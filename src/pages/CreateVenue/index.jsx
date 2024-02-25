@@ -97,7 +97,7 @@ const CreateVenue = () => {
   });
 
   return (
-    <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
+    <div className='md:bg-secondary px-12 p-4 max-w-3xl m-auto mt-24'>
       <div className='bg-yellow p-10'>
         <h1 className='text-center fontPrimary font-bold md:text-4xl text-3xl mb-8'>
           Register Your Venue
@@ -432,8 +432,8 @@ const CreateVenue = () => {
                 className='bg-secondary border-2 border-green rounded-lg p-2 mt-2 mr-2'
               />
             </div>
-            <div className='flex justify-center'>
-              <button type='submit' className='btnPrimary bg-green mt-8'>
+            <div>
+              <button type='submit' className='btnPrimary bg-green mt-8 w-full'>
                 REGISTER VENUE
               </button>
             </div>

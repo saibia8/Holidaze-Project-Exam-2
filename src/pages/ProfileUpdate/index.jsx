@@ -60,7 +60,7 @@ const ProfileUpdate = () => {
 
   return (
     <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-      <div className='bg-yellow flex flex-col p-10 mx-auto'>
+      <div className='bg-yellow flex flex-col p-10 max-w-3xl m-auto'>
         <h1 className='text-center md:text-3xl text-2xl fontPrimary font-bold'>
           Change Your Account Settings
         </h1>

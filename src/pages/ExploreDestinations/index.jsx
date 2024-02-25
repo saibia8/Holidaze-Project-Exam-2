@@ -1,20 +1,41 @@
 import { useQuery } from '@tanstack/react-query';
 import VenuesList from '../../components/Venues/VenuesList';
 import { getVenues } from '../../services/api';
+import { useEffect, useState } from 'react';
 
 const ExploreDestinations = () => {
-  const {
-    isPending,
-    isError,
-    data: venues,
-    error,
-  } = useQuery({
+  const [filteredVenues, setFilteredVenues] = useState([]);
+
+  const { isPending, isError, data, error } = useQuery({
     queryKey: ['venues'],
     queryFn: getVenues,
   });
 
+  useEffect(() => {
+    console.log('Filtered venues:', filteredVenues);
+  }, [filteredVenues]);
+
   if (isPending) return <span>Loading...</span>;
   if (isError) return `Error: ${error.message}`;
+
+  function isVenueAvailable(venue, startDate, endDate) {
+    const desiredStartDate = new Date(startDate);
+    const desiredEndDate = new Date(endDate);
+
+    return !venue.bookings.some((booking) => {
+      const bookingStartDate = new Date(booking.dateFrom);
+      const bookingEndDate = new Date(booking.dateTo);
+
+      return (
+        (desiredStartDate >= bookingStartDate &&
+          desiredStartDate <= bookingEndDate) ||
+        (desiredEndDate >= bookingStartDate &&
+          desiredEndDate <= bookingEndDate) ||
+        (desiredStartDate <= bookingStartDate &&
+          desiredEndDate >= bookingEndDate)
+      );
+    });
+  }
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -24,6 +45,23 @@ const ExploreDestinations = () => {
     const guests = e.target.guests.value;
 
     console.log(destination, startDate, endDate, guests);
+    const filtered = data.filter((venue) => {
+      console.log(venue.name, venue.maxGuests);
+      const isAvailable = isVenueAvailable(venue, startDate, endDate);
+      const isDestinationMatch = venue.name
+        .trim()
+        .toLowerCase()
+        .includes(destination.trim().toLowerCase());
+      const isGuestsMatch = venue.maxGuests === Number(guests);
+      console.log(
+        `Checking venue in ${venue.name} for ${venue.maxGuests} guests:`,
+        `Availability: ${isAvailable ? 'Yes' : 'No'}`,
+        `Destination match: ${isDestinationMatch ? 'Yes' : 'No'}`,
+        `Guests match: ${isGuestsMatch ? 'Yes' : 'No'}`
+      );
+      return isAvailable && isDestinationMatch && isGuestsMatch;
+    });
+    setFilteredVenues(filtered);
   };
 
   return (
@@ -94,14 +132,16 @@ const ExploreDestinations = () => {
                 </div>
               </div>
             </div>
-            <button className='w-full btnSecondary p-2 mt-4 mb-8 mx-auto'>
-              SEARCH
-            </button>
+            <div className='flex justify-center mt-4'>
+              <button className='w-1/2 btnSecondary p-2 mt-4 mb-8'>
+                SEARCH
+              </button>
+            </div>
           </form>
         </div>
       </div>
       <div>
-        <VenuesList venues={venues} />
+        <VenuesList venues={filteredVenues.length ? filteredVenues : data} />
       </div>
     </div>
   );
