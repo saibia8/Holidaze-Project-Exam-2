@@ -5,6 +5,7 @@ import petsImg from '../../../assets/footprint.png';
 import star from '../../../assets/Star.png';
 import noImage from '../../../assets/no_image_available.png';
 import { Link, useNavigate } from 'react-router-dom';
+import { useBearStore } from '../../../state/state';
 
 const VenueItem = ({
   id,
@@ -16,7 +17,8 @@ const VenueItem = ({
   meta,
   owner,
 }) => {
-  const NAME = owner
+  const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
+  const NAME = isUserLoggedIn
     ? JSON.parse(localStorage.getItem('store')).state.userInfo.name
     : '';
   const navigate = useNavigate();
@@ -91,7 +93,7 @@ const VenueItem = ({
             </p>
           </div>
         </div>
-        {!owner && (
+        {owner && NAME !== owner.name && (
           <div className='w-full mx-auto mt-8 flex items-center justify-center'>
             <button className='btnSecondary rounded-xl'>Book</button>
           </div>
