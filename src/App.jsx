@@ -18,6 +18,7 @@ import VenueManagerRoute from './components/VenueManagerRoute';
 import CreateVenue from './pages/CreateVenue';
 import EditVenue from './pages/EditVenue';
 import UpdateBooking from './pages/UpdateBooking';
+import MyBookings from './pages/MyBookings';
 
 function App() {
   return (
@@ -70,6 +71,14 @@ function App() {
             element={
               <PrivateRoute>
                 <UpdateBooking />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/my-bookings'
+            element={
+              <PrivateRoute>
+                <MyBookings />
               </PrivateRoute>
             }
           />

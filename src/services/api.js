@@ -76,6 +76,24 @@ export const getBookingById = async (id) => {
   }
 };
 
+export const getBookingsByName = async () => {
+  const NAME = STORE_DATA.state.userInfo.name;
+  try {
+    const response = await fetch(
+      `${PROFILE_URL}/${NAME}/bookings?_venue=true`,
+      {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+    );
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getVenuesRating = async () => {
   try {
     const response = await fetch(`${VENUES_URL}?sort=rating&limit=9`);

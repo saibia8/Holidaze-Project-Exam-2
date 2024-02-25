@@ -23,6 +23,7 @@ const Venue = () => {
   const isUserLoggedIn = useBearStore((state) => state.isUserLoggedIn);
   let params = useParams();
   const id = params.id;
+
   const {
     isPending,
     isError,
@@ -36,10 +37,9 @@ const Venue = () => {
   const reserveBookingMutation = useMutation({
     mutationFn: reserveBooking,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['venues', name] });
-      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ['bookings', 'user'] });
       if (data.id) {
-        navigate('/profile');
+        navigate('/my-bookings');
       }
     },
   });
