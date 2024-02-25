@@ -13,7 +13,6 @@ const BookingsList = ({ bookings }) => {
     mutationFn: deleteBookingById,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });
-      console.log(data);
     },
   });
 

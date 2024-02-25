@@ -1,7 +1,9 @@
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const SearchForm = () => {
+  const navigate = useNavigate();
   const formik2 = useFormik({
     initialValues: {
       destination: '',
@@ -16,7 +18,9 @@ const SearchForm = () => {
       guests: Yup.number(),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      navigate(
+        `/explore-destinations?name=${values.destination}&dateFrom=${values.dateIn}&dateTo=${values.dateOut}&maxGuests=${values.guests}`
+      );
     },
   });
 

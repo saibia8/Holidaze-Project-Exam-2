@@ -10,7 +10,6 @@ const RegisterForm = () => {
     mutationFn: registerUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
-      console.log(data);
     },
   });
 
@@ -49,7 +48,6 @@ const RegisterForm = () => {
         avatar: values.avatar,
         venueManager: values.venueManager,
       };
-      console.log(data);
       registerUserMutation.mutate(data);
     },
   });

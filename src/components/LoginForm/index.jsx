@@ -18,7 +18,6 @@ const LoginForm = () => {
     mutationFn: loginUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user', 'login'] });
-      console.log(data.accessToken);
       if (data.accessToken) {
         setIsUserLoggedIn(true);
         setToken(data.accessToken);

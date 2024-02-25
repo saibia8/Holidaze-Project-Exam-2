@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { eachDayOfInterval, parseISO, startOfToday, isSameDay } from 'date-fns';
+import { eachDayOfInterval, startOfToday, isSameDay } from 'date-fns';
 
 const CalendarPicker = ({
   id,
@@ -21,13 +21,11 @@ const CalendarPicker = ({
     const [start, end] = dates;
     const selectedDates = eachDayOfInterval({ start, end });
 
-    // Check if any of the selected dates are in the excluded dates
     const isExcludedDateSelected = selectedDates.some((date) =>
       excludedDates.some((excludedDate) => isSameDay(date, excludedDate))
     );
 
     if (isExcludedDateSelected) {
-      // Set an error message for the startDate field
       formik.setFieldError(
         'startDate',
         'The selected range includes an excluded date.'

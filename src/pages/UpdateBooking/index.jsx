@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   getBookingById,
   getVenueById,
-  reserveBooking,
   updateBooking,
 } from '../../services/api';
 import star from '../../assets/Star.png';
@@ -21,8 +20,6 @@ import CalendarPicker from '../../components/CalendarPicker';
 const UpdateBooking = () => {
   const [nights, setNights] = useState(1);
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const name = useBearStore((state) => state.userInfo?.name);
   let params = useParams();
   const id = params.id;
   const query = new URLSearchParams(useLocation().search);
@@ -52,7 +49,6 @@ const UpdateBooking = () => {
     mutationFn: ({ id, data }) => updateBooking(id, data),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['booking', id] });
-      console.log(data);
     },
   });
 

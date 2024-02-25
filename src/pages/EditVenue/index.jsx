@@ -24,7 +24,6 @@ const EditVenue = () => {
     mutationFn: ({ id, data }) => updateVenue(id, data),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', 'user'] });
-      console.log(data);
     },
   });
 
@@ -32,7 +31,6 @@ const EditVenue = () => {
     mutationFn: deleteVenueById,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', 'user'] });
-      console.log(data);
     },
   });
 

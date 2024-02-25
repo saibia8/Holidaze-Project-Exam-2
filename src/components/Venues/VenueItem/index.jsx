@@ -4,7 +4,7 @@ import parkingImg from '../../../assets/parking.png';
 import petsImg from '../../../assets/footprint.png';
 import star from '../../../assets/Star.png';
 import noImage from '../../../assets/No-image-icon.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useBearStore } from '../../../state/state';
 
 const VenueItem = ({

@@ -13,7 +13,6 @@ const ProfileUpdate = () => {
     mutationFn: updateProfile,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', name] });
-      console.log(data);
     },
   });
 

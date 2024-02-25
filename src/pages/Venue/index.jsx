@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getVenueById, reserveBooking } from '../../services/api';
 import star from '../../assets/Star.png';
 import breakfastImg from '../../assets/cafe.png';
@@ -66,7 +66,6 @@ const Venue = () => {
         dateTo: values.endDate,
         guests: values.guests,
       };
-      console.log(data);
       reserveBookingMutation.mutate(data);
     },
   });

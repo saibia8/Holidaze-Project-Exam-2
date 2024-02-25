@@ -266,8 +266,6 @@ export const updateVenue = async (id, data) => {
   const STORE_DATA = JSON.parse(localStorage.getItem('store'));
   const TOKEN = STORE_DATA.state.token;
   try {
-    console.log(id);
-    console.log(data);
     const response = await fetch(
       `${VENUES_URL}/${id}?_owner=true&_bookings=true`,
       {
