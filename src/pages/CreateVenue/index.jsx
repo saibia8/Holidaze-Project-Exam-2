@@ -2,14 +2,19 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createVenue } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const CreateVenue = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const createVenueMutation = useMutation({
     mutationFn: createVenue,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', 'user'] });
+      if (data) {
+        navigate('/venues-manager');
+      }
     },
   });
 

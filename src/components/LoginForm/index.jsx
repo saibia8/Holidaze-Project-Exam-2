@@ -61,11 +61,8 @@ const LoginForm = () => {
   });
 
   return (
-    <div className='bg-green block max-w-md rounded-lg p-6'>
-      <form
-        className='flex flex-col mx-auto space-y-3'
-        onSubmit={formik.handleSubmit}
-      >
+    <div className='bg-green rounded-lg p-6'>
+      <form className='flex flex-col mx-auto' onSubmit={formik.handleSubmit}>
         <label htmlFor='emailId' className='font-bold mt-4'>
           Email:
         </label>
@@ -85,7 +82,7 @@ const LoginForm = () => {
           Password:
         </label>
         <input
-          className='border text-primary border-gray-400 rounded p-1'
+          className='border text-primary border-gray-400 rounded p-1 mb-6'
           type='password'
           id='password'
           name='password'

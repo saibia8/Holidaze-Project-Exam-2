@@ -31,6 +31,11 @@ const MyBookings = () => {
         <h1 className='fontPrimary font-bold md:text-4xl text-2xl text-center'>
           Upcoming Bookings
         </h1>
+        {!bookings.length && (
+          <p className='text-center font-bold mt-6'>
+            You have no upcoming bookings.
+          </p>
+        )}
         <BookingsList bookings={bookings} />
       </div>
     </div>

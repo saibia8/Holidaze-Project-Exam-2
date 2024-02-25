@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const name = useBearStore((state) => state.userInfo?.name);
+  const setUpdateVenueManager = useBearStore(
+    (state) => state.setIsUserVenueManager
+  );
   const queryClient = useQueryClient();
 
   const {
@@ -23,12 +26,12 @@ const Profile = () => {
     mutationFn: updateVenueManager,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', name] });
-      console.log(data);
     },
   });
 
   const updateToVenueManager = () => {
     profileUpdateVenueManagerMutation.mutate({ venueManager: true });
+    setUpdateVenueManager(true);
   };
 
   if (isPending)
@@ -103,6 +106,11 @@ const Profile = () => {
         <h1 className='fontPrimary text-2xl md:text-4xl font-bold text-center mb-4 mt-8'>
           Your upcoming bookings
         </h1>
+        {!profile.bookings.length && (
+          <p className='text-center font-bold mt-6'>
+            You have no upcoming bookings.
+          </p>
+        )}
         <BookingsList bookings={profile.bookings} />
       </div>
     </div>

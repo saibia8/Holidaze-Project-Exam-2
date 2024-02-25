@@ -32,6 +32,9 @@ const VenuesManager = () => {
         <h1 className='fontPrimary font-bold md:text-4xl text-2xl text-center'>
           Venues Manager
         </h1>
+        {!venues.length && (
+          <p className='text-center font-bold mt-6'>You have no venues.</p>
+        )}
         <VenuesList venues={venues} />
       </div>
     </div>

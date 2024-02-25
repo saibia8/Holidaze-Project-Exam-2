@@ -3,9 +3,9 @@ import LoginForm from '../../components/LoginForm';
 
 const Login = () => {
   return (
-    <div className='bg-yellow px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-      <div className='text-center mt-8 flex flex-col items-center'>
-        <h2 className='md:text-4xl text-2xl font-bold fontPrimary text-primary mb-8'>
+    <div className='bg-yellow px-12 p-4 mt-24'>
+      <div className=' mt-8 flex flex-col max-w-3xl m-auto'>
+        <h2 className='md:text-4xl text-2xl font-bold fontPrimary text-center text-primary mb-8'>
           Login
         </h2>
         <div className='text-secondary'>
