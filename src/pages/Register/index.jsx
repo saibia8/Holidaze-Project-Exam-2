@@ -4,7 +4,7 @@ import RegisterForm from '../../components/RegisterForm';
 const Register = () => {
   return (
     <div className='bg-yellow px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-      <div className='text-center mt-8 flex flex-col items-center'>
+      <div className='mt-8 flex flex-col items-center'>
         <h2 className='md:text-4xl text-2xl font-bold fontPrimary text-primary mb-8'>
           Sign Up
         </h2>

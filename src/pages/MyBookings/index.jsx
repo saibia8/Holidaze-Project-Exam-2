@@ -13,8 +13,18 @@ const MyBookings = () => {
     queryFn: getBookingsByName,
   });
 
-  if (isPending) return <span>Loading...</span>;
-  if (isError) return `Error: ${error.message}`;
+  if (isPending)
+    return (
+      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-20 items-center'>
+        <span className='loading loading-infinity loading-lg items-center text-center'></span>
+      </div>
+    );
+  if (isError)
+    return (
+      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-20 items-center'>
+        `Error: ${error.message}`
+      </div>
+    );
   return (
     <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
       <div className='bg-yellow p-8'>

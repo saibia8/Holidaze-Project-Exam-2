@@ -1,4 +1,4 @@
-import picture from '../../assets/Hotel-travel-calm-cozy-sunset.png';
+import picture from '../../assets/Hotel-travel-calm-cozy-sunset.jpg';
 
 const About = () => {
   return (

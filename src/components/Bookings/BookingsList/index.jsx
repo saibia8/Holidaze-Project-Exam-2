@@ -13,7 +13,6 @@ const BookingsList = ({ bookings }) => {
     mutationFn: deleteBookingById,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });
-      console.log(data);
     },
   });
 
@@ -32,52 +31,55 @@ const BookingsList = ({ bookings }) => {
   };
 
   return (
-    <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 md:w-11/12 mx-auto'>
-      {bookingsList.map((booking) => (
-        <BookingItem
-          key={booking.id}
-          bookingId={booking.id}
-          dateFrom={booking.dateFrom}
-          dateTo={booking.dateTo}
-          guests={booking.guests}
-          venueId={booking.venue.id}
-          media={booking.venue.media}
-          name={booking.venue.name}
-          location={booking.venue.location}
-          rating={booking.venue.rating}
-          price={booking.venue.price}
-          meta={booking.venue.meta}
-          openModal={openModal}
-          bookingDelete={bookingDeleteHandler}
-        />
-      ))}
-      <dialog id='delete_modal' className='modal'>
-        <div className='modal-box'>
-          <h3 className='font-bold text-lg'>Cancel {modalName} booking?</h3>
-          <p className='py-4'>
-            Are you sure want to cancel booking? This will delete your booking.{' '}
-          </p>
-          <div className='flex justify-end'>
-            <button
-              className='btnPrimary mr-4'
-              onClick={() => {
-                document.getElementById('delete_modal').close();
-              }}
-            >
-              CANCEL
-            </button>
-            <button
-              className='btnPrimary bg-[#FFB7A0] hover:outline hover:outline-[#FFB7A0] text-primary'
-              onClick={bookingDeleteHandler}
-            >
-              DELETE
-            </button>
+    <div className='md:container md:mx-auto'>
+      <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 md:w-11/12 mx-auto'>
+        {bookingsList.map((booking) => (
+          <BookingItem
+            key={booking.id}
+            bookingId={booking.id}
+            dateFrom={booking.dateFrom}
+            dateTo={booking.dateTo}
+            guests={booking.guests}
+            venueId={booking.venue.id}
+            media={booking.venue.media}
+            name={booking.venue.name}
+            location={booking.venue.location}
+            rating={booking.venue.rating}
+            price={booking.venue.price}
+            meta={booking.venue.meta}
+            openModal={openModal}
+            bookingDelete={bookingDeleteHandler}
+          />
+        ))}
+        <dialog id='delete_modal' className='modal'>
+          <div className='modal-box'>
+            <h3 className='font-bold text-lg'>Cancel {modalName} booking?</h3>
+            <p className='py-4'>
+              Are you sure want to cancel booking? This will delete your
+              booking.{' '}
+            </p>
+            <div className='flex justify-end'>
+              <button
+                className='btnPrimary mr-4'
+                onClick={() => {
+                  document.getElementById('delete_modal').close();
+                }}
+              >
+                CANCEL
+              </button>
+              <button
+                className='btnPrimary bg-[#FFB7A0] hover:outline hover:outline-[#FFB7A0] text-primary'
+                onClick={bookingDeleteHandler}
+              >
+                DELETE
+              </button>
+            </div>
           </div>
-        </div>
-        <form method='dialog' className='modal-backdrop'>
-          <button>close</button>
-        </form>
-      </dialog>
+          <form method='dialog' className='modal-backdrop'>
+            <button>close</button>
+          </form>
+        </dialog>
+      </div>
     </div>
   );
 };

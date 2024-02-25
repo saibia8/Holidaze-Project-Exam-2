@@ -1,8 +1,6 @@
 import star from '../../assets/Star.png';
 
 const CustomerItem = ({ comments }) => {
-  let contentStars = [];
-
   return (
     <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 md:w-11/12 mx-auto'>
       {comments.map((comment) => (

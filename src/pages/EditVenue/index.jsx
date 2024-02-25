@@ -24,7 +24,6 @@ const EditVenue = () => {
     mutationFn: ({ id, data }) => updateVenue(id, data),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', 'user'] });
-      console.log(data);
     },
   });
 
@@ -32,7 +31,6 @@ const EditVenue = () => {
     mutationFn: deleteVenueById,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', 'user'] });
-      console.log(data);
     },
   });
 
@@ -126,21 +124,19 @@ const EditVenue = () => {
 
   if (isPending)
     return (
-      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-        <span>Loading...</span>
+      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-20 items-center'>
+        <span className='loading loading-infinity loading-lg items-center text-center'></span>
       </div>
     );
-
   if (isError)
     return (
-      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-        {' '}
-        `Error: ${error.message}`{' '}
+      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-20 items-center'>
+        `Error: ${error.message}`
       </div>
     );
 
   return (
-    <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
+    <div className='md:bg-secondary px-12 p-4 max-w-3xl m-auto mt-24'>
       <div className='bg-yellow p-10'>
         <h1 className='text-center fontPrimary font-bold md:text-4xl text-3xl mb-8'>
           Update Your Venue
@@ -479,8 +475,8 @@ const EditVenue = () => {
                 className='bg-secondary border-2 border-green rounded-lg p-2 mt-2 mr-2'
               />
             </div>
-            <div className='flex justify-center'>
-              <button type='submit' className='btnPrimary bg-green mt-8'>
+            <div>
+              <button type='submit' className='btnPrimary bg-green mt-8 w-full'>
                 UPDATE VENUE
               </button>
             </div>
@@ -489,14 +485,14 @@ const EditVenue = () => {
         <div className='border-[1px] border-green mt-10' />
         <div>
           <h1 className='font-bold mt-4'>DELETE VENUE</h1>
-          <p className='mt-2 md:w-1/2'>
-            Warning: Deleting this venue will permanently remove it from your
-            account. You will lose access to all associated information and it
-            cannot be recovered.
+          <p className='mt-2 md:w-2/3 mb-4'>
+            <span className='font-bold'>Warning:</span> Deleting this venue will
+            permanently remove it from your account. You will lose access to all
+            associated information and it cannot be recovered.
           </p>
           <button
             onClick={deleteVenueHandler}
-            className='btnPrimary mt-3 md:w-1/3 bg-red-500 hover:outline-red-500'
+            className='btnPrimary w-full mt-3 md:w-1/3 bg-red-500 hover:outline-red-500'
           >
             DELETE
           </button>

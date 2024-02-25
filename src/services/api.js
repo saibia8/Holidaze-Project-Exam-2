@@ -98,7 +98,9 @@ export const getBookingsByName = async () => {
 
 export const getVenuesRating = async () => {
   try {
-    const response = await fetch(`${VENUES_URL}?sort=rating&limit=9`);
+    const response = await fetch(
+      `${VENUES_URL}?_owner=true&sort=rating&limit=9`
+    );
     return response.json();
   } catch (error) {
     throw error;
@@ -184,6 +186,26 @@ export const updateBooking = async (id, data) => {
   }
 };
 
+export const updateVenueManager = async (data) => {
+  const STORE_DATA = JSON.parse(localStorage.getItem('store'));
+  const TOKEN = STORE_DATA.state.token;
+  const NAME = STORE_DATA.state.userInfo.name;
+  try {
+    const response = await fetch(`${PROFILE_URL}/${NAME}`, {
+      method: 'PUT',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteBookingById = async (id) => {
   const STORE_DATA = JSON.parse(localStorage.getItem('store'));
   const TOKEN = STORE_DATA.state.token;
@@ -244,8 +266,6 @@ export const updateVenue = async (id, data) => {
   const STORE_DATA = JSON.parse(localStorage.getItem('store'));
   const TOKEN = STORE_DATA.state.token;
   try {
-    console.log(id);
-    console.log(data);
     const response = await fetch(
       `${VENUES_URL}/${id}?_owner=true&_bookings=true`,
       {

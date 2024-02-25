@@ -3,8 +3,8 @@ import wifiImg from '../../../assets/wiFi.png';
 import parkingImg from '../../../assets/parking.png';
 import petsImg from '../../../assets/footprint.png';
 import star from '../../../assets/Star.png';
-import noImage from '../../../assets/no_image_available.png';
-import { Link, useNavigate } from 'react-router-dom';
+import noImage from '../../../assets/No-image-icon.png';
+import { useNavigate } from 'react-router-dom';
 import { useBearStore } from '../../../state/state';
 
 const VenueItem = ({
@@ -45,10 +45,10 @@ const VenueItem = ({
           />
         </div>
         <h3 className='text-3xl font-bold text-primary'>{name}</h3>
-        <p className='text-tartiary text-center my-5'>
+        <p className='text-tartiary my-5'>
           {location.city}, {location.country}
         </p>
-        <p className='mt-5 text-center text-primary text-xl font-bold'>
+        <p className='mt-5 mb-5 text-primary text-xl font-bold'>
           ${price}/night
         </p>
         <div className='flex flex-row justify-between'>
@@ -95,14 +95,14 @@ const VenueItem = ({
         </div>
         {owner && NAME !== owner.name && (
           <div className='w-full mx-auto mt-8 flex items-center justify-center'>
-            <button className='btnSecondary rounded-xl'>Book</button>
+            <button className='btnSecondary rounded-xl w-full'>Book</button>
           </div>
         )}
         {owner && NAME === owner.name && (
           <div className='w-full mx-auto mt-8 flex items-center justify-center'>
             <button
               onClick={navigateToUpdateId}
-              className='btnSecondary rounded-xl'
+              className='btnSecondary rounded-xl w-full'
             >
               Edit
             </button>

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getVenueById, reserveBooking } from '../../services/api';
 import star from '../../assets/Star.png';
 import breakfastImg from '../../assets/cafe.png';
@@ -12,7 +12,7 @@ import { useBearStore } from '../../state/state';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
-import noImage from '../../assets/no_image_available.svg';
+import noImage from '../../assets/No-image-icon.png';
 import CalendarPicker from '../../components/CalendarPicker';
 
 const Venue = () => {
@@ -66,7 +66,6 @@ const Venue = () => {
         dateTo: values.endDate,
         guests: values.guests,
       };
-      console.log(data);
       reserveBookingMutation.mutate(data);
     },
   });
@@ -84,7 +83,7 @@ const Venue = () => {
   if (isPending)
     return (
       <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-        <span>Loading...</span>
+        <span className='loading loading-infinity loading-lg'></span>
       </div>
     );
   if (isError)
@@ -207,163 +206,111 @@ const Venue = () => {
             </div>
           </div>
         </div>
-        <div className='border-2 border-green md:px-6 px-4 rounded-lg shadow-3xl h-fit'>
+        <div className='border-2 border-green md:px-6 px-4 rounded-lg shadow-3xl'>
           <div>
-            <div>
-              <p className='text-primary text-xl font-bold pt-4'>
-                ${venue.price}/night
-              </p>
-              <form action='submit' onSubmit={formik3.handleSubmit}>
-                <div className='mr-4 mt-8 flex flex-col items-center'>
-                  <label
-                    htmlFor='startDate'
-                    className='font-bold text-center mb-3'
-                  >
-                    Select Dates
-                  </label>
-                  <CalendarPicker
-                    id='startDate'
-                    name='startDate'
-                    startDate={formik3.values.startDate}
-                    endDate={formik3.values.endDate}
-                    formik={formik3}
-                    bookings={venue.bookings}
-                    onChange={({ startDate, endDate }) => {
-                      formik3.setFieldValue('startDate', startDate);
-                      formik3.setFieldValue('endDate', endDate);
-                    }}
-                  />
-                  {formik3.touched.startDate && formik3.errors.startDate ? (
-                    <div className=' text-red-500'>
-                      {formik3.errors.startDate}
-                    </div>
-                  ) : null}
-                  {formik3.touched.endDate && formik3.errors.endDate ? (
-                    <div className=' text-red-500'>
-                      {formik3.errors.endDate}
-                    </div>
-                  ) : null}
-                  {/* <input
-                      type='date'
-                      id='startDate'
-                      min={new Date().toISOString().split('T')[0]}
-                      name='startDate'
-                      onChange={formik3.handleChange}
-                      value={formik3.values.startDate}
-                      className={`w-full bg-secondary border-2 ${
-                        formik3.errors.startDate
-                          ? 'border-red-500'
-                          : 'border-green'
-                      } rounded-lg p-2 mt-2 mr-2`}
-                    />
-                    {formik3.touched.startDate && formik3.errors.startDate ? (
-                      <div className=' text-red-500'>
-                        {formik3.errors.startDate}
-                      </div>
-                    ) : null} */}
+            <p className='text-primary text-xl font-bold pt-4'>
+              ${venue.price}/night
+            </p>
+            <form action='submit' onSubmit={formik3.handleSubmit}>
+              <div className='mr-4 mt-8 flex  justify-items-center'>
+                <label
+                  htmlFor='startDate'
+                  className='font-bold text-center mb-3 mr-7'
+                >
+                  Select Dates
+                </label>
+                <CalendarPicker
+                  id='startDate'
+                  name='startDate'
+                  startDate={formik3.values.startDate}
+                  endDate={formik3.values.endDate}
+                  formik={formik3}
+                  bookings={venue.bookings}
+                  onChange={({ startDate, endDate }) => {
+                    formik3.setFieldValue('startDate', startDate);
+                    formik3.setFieldValue('endDate', endDate);
+                  }}
+                />
+                {formik3.touched.startDate && formik3.errors.startDate ? (
+                  <div className=' text-red-500'>
+                    {formik3.errors.startDate}
+                  </div>
+                ) : null}
+                {formik3.touched.endDate && formik3.errors.endDate ? (
+                  <div className=' text-red-500'>{formik3.errors.endDate}</div>
+                ) : null}
+              </div>
+              <div className='mr-4 mt-4 pb-5 flex flex-col'>
+                <label htmlFor='guests' className='font-bold'>
+                  Guests
+                </label>
+                <input
+                  type='number'
+                  min={1}
+                  id='guests'
+                  name='guests'
+                  onChange={formik3.handleChange}
+                  value={formik3.values.guests}
+                  className={`w-1/2 bg-secondary border-2 ${
+                    formik3.errors.guests ? 'border-red-500' : 'border-green'
+                  } rounded-lg p-2 mt-2 mr-2`}
+                />
+                {formik3.touched.guests && formik3.errors.guests ? (
+                  <div className=' text-red-500'>{formik3.errors.guests}</div>
+                ) : null}
+              </div>
+              <div className='flex md:flex-row flex-col justify-between'>
+                <div className='mr-4 mt-6'>
+                  <h3 className='font-bold text-lg'>{`$${
+                    venue.price
+                  } x ${nights} night${nights !== 1 ? 's' : ''}`}</h3>
                 </div>
-                {/* <div className='mr-4 mt-8'>
-                    <label htmlFor='endDate' className='font-bold'>
-                      Check-Out Date
-                    </label>
-                    <input
-                      type='date'
-                      id='endDate'
-                      name='endDate'
-                      min={
-                        new Date(new Date().setDate(new Date().getDate() + 1))
-                          .toISOString()
-                          .split('T')[0]
-                      }
-                      onChange={formik3.handleChange}
-                      value={formik3.values.endDate}
-                      className={`w-full bg-secondary border-2 ${
-                        formik3.errors.endDate
-                          ? 'border-red-500'
-                          : 'border-green'
-                      } rounded-lg p-2 mt-2`}
-                    />
-                    {formik3.touched.endDate && formik3.errors.endDate ? (
-                      <div className=' text-red-500'>
-                        {formik3.errors.endDate}
-                      </div>
-                    ) : null}
-                  </div> */}
-
-                <div className='mr-4 mt-4 pb-5 flex flex-col'>
-                  <label htmlFor='guests' className='font-bold'>
-                    Guests
-                  </label>
-                  <input
-                    type='number'
-                    min={1}
-                    id='guests'
-                    name='guests'
-                    onChange={formik3.handleChange}
-                    value={formik3.values.guests}
-                    className={`w-1/2 bg-secondary border-2 ${
-                      formik3.errors.guests ? 'border-red-500' : 'border-green'
-                    } rounded-lg p-2 mt-2 mr-2`}
-                  />
-                  {formik3.touched.guests && formik3.errors.guests ? (
-                    <div className=' text-red-500'>{formik3.errors.guests}</div>
-                  ) : null}
+                <div className='mr-4 mt-8'>
+                  <h3 className='font-bold text-lg'>${venue.price * nights}</h3>
                 </div>
-                <div className='flex md:flex-row flex-col justify-between'>
-                  <div className='mr-4 mt-6'>
-                    <h3 className='font-bold text-lg'>{`$${
-                      venue.price
-                    } x ${nights} night${nights !== 1 ? 's' : ''}`}</h3>
-                  </div>
-                  <div className='mr-4 mt-8'>
-                    <h3 className='font-bold text-lg'>
-                      ${venue.price * nights}
-                    </h3>
-                  </div>
+              </div>
+              <div className='flex md:flex-row flex-col justify-between mb-2'>
+                <div className='mr-4 mt-2'>
+                  <h3 className='font-bold text-lg'>Holidaze Service fee</h3>
                 </div>
-                <div className='flex md:flex-row flex-col justify-between mb-2'>
-                  <div className='mr-4 mt-2'>
-                    <h3 className='font-bold text-lg'>Holidaze Service fee</h3>
-                  </div>
-                  <div className='mr-4 mt-2'>
-                    <h3 className='font-bold text-lg'>$80</h3>
-                  </div>
+                <div className='mr-4 mt-2'>
+                  <h3 className='font-bold text-lg'>$80</h3>
                 </div>
-                <div className='border-[1px] border-green' />
-                <div className='flex md:flex-row flex-col justify-between mb-4'>
-                  <div className='mr-4 mt-2'>
-                    <h3 className='font-bold text-lg'>Total</h3>
-                  </div>
-                  <div className='mr-4 mt-2'>
-                    <h3 className='font-bold text-lg'>
-                      ${venue.price * nights + 80}
-                    </h3>
-                  </div>
+              </div>
+              <div className='border-[1px] border-green' />
+              <div className='flex md:flex-row flex-col justify-between mb-4'>
+                <div className='mr-4 mt-2'>
+                  <h3 className='font-bold text-lg'>Total</h3>
                 </div>
-                {isUserLoggedIn && name === venue.owner.name && (
-                  <div className='flex pb-10 pt-5 justify-center'>
-                    <Link to={`/venue-edit/${id}/`} className='btnSecondary'>
-                      Edit Your Venue
-                    </Link>
-                  </div>
-                )}
-                {isUserLoggedIn && name !== venue.owner.name && (
-                  <button
-                    type='submit'
-                    className='w-full btnPrimary p-2 mt-4 mb-8 bg-green'
-                  >
-                    Reserve
-                  </button>
-                )}
-                {!isUserLoggedIn && (
-                  <div className='flex pb-10 pt-5 justify-center'>
-                    <Link to={`/login`} className='btnPrimary'>
-                      Login to Reserve
-                    </Link>
-                  </div>
-                )}
-              </form>
-            </div>
+                <div className='mr-4 mt-2'>
+                  <h3 className='font-bold text-lg'>
+                    ${venue.price * nights + 80}
+                  </h3>
+                </div>
+              </div>
+              {isUserLoggedIn && name === venue.owner.name && (
+                <div className='flex pb-10 pt-5 justify-center'>
+                  <Link to={`/venue-edit/${id}/`} className='btnSecondary'>
+                    Edit Your Venue
+                  </Link>
+                </div>
+              )}
+              {isUserLoggedIn && name !== venue.owner.name && (
+                <button
+                  type='submit'
+                  className='w-full btnPrimary p-2 mt-4 mb-8 bg-green'
+                >
+                  Reserve
+                </button>
+              )}
+              {!isUserLoggedIn && (
+                <div className='flex pb-10 pt-5 justify-center'>
+                  <Link to={`/login`} className='btnPrimary'>
+                    Login to Reserve
+                  </Link>
+                </div>
+              )}
+            </form>
           </div>
         </div>
       </div>

@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   getBookingById,
   getVenueById,
-  reserveBooking,
   updateBooking,
 } from '../../services/api';
 import star from '../../assets/Star.png';
@@ -15,14 +14,12 @@ import { useBearStore } from '../../state/state';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
-import noImage from '../../assets/no_image_available.svg';
+import noImage from '../../assets/No-image-icon.png';
 import CalendarPicker from '../../components/CalendarPicker';
 
 const UpdateBooking = () => {
   const [nights, setNights] = useState(1);
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const name = useBearStore((state) => state.userInfo?.name);
   let params = useParams();
   const id = params.id;
   const query = new URLSearchParams(useLocation().search);
@@ -52,7 +49,6 @@ const UpdateBooking = () => {
     mutationFn: ({ id, data }) => updateBooking(id, data),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['booking', id] });
-      console.log(data);
     },
   });
 
@@ -94,7 +90,7 @@ const UpdateBooking = () => {
   if (isPending || isPendingVenue)
     return (
       <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-        <span>Loading...</span>
+        <span className='loading loading-infinity loading-lg'></span>
       </div>
     );
   if (isError || isErrorVenue)

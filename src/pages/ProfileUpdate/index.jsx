@@ -13,7 +13,6 @@ const ProfileUpdate = () => {
     mutationFn: updateProfile,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['venues', name] });
-      console.log(data);
     },
   });
 
@@ -46,21 +45,20 @@ const ProfileUpdate = () => {
 
   if (isPending)
     return (
-      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-        <span>Loading...</span>
+      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-20 items-center'>
+        <span className='loading loading-infinity loading-lg items-center text-center'></span>
       </div>
     );
   if (isError)
     return (
-      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-        {' '}
-        `Error: ${error.message}`{' '}
+      <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-20 items-center'>
+        `Error: ${error.message}`
       </div>
     );
 
   return (
     <div className='md:bg-secondary px-12 p-4 max-w-screen-2xl mx-auto mt-24'>
-      <div className='bg-yellow flex flex-col p-10 mx-auto'>
+      <div className='bg-yellow flex flex-col p-10 max-w-3xl m-auto'>
         <h1 className='text-center md:text-3xl text-2xl fontPrimary font-bold'>
           Change Your Account Settings
         </h1>

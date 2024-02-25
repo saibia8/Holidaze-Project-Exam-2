@@ -18,7 +18,6 @@ const LoginForm = () => {
     mutationFn: loginUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user', 'login'] });
-      console.log(data.accessToken);
       if (data.accessToken) {
         setIsUserLoggedIn(true);
         setToken(data.accessToken);
@@ -64,7 +63,7 @@ const LoginForm = () => {
   return (
     <div className='bg-green block max-w-md rounded-lg p-6'>
       <form
-        className='flex flex-col w-5/6 mx-auto space-y-3 '
+        className='flex flex-col mx-auto space-y-3'
         onSubmit={formik.handleSubmit}
       >
         <label htmlFor='emailId' className='font-bold mt-4'>
