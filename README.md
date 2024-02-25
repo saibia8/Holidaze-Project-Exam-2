@@ -1,10 +1,10 @@
 # Holidaze (Project Exam 2)
 
-<img src="/src/assets/Holidaze-Screenshot.jpg" width="500">
+<img src="/src/assets/Holidaze-Screenshot.png" width="500">
 
 As a front-end development student, my final project was to design and code the fictional Holidaze venue booking website. This project aimed to demonstrate the skills I have developed over the past two years at Noroff, showcasing proficiency in both the visual and technical aspects of front-end development. The project spanned 7 weeks.
 
-[Link to the live website]()
+[Link to the live website](https://wondrous-crepe-f3e4e1.netlify.app/)
 
 ## Description
 The Holidaze project had specific technical requirements. However, I was free to choose the design, user experience, and UI according to my preferences. Additionally, Noroff provided user stories, which were integrated into the project's design and coding stages. The project makes use of an API provided by Noroff. This project only covers the front-end application for the API.
